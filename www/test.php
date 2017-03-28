@@ -25,7 +25,7 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 	if(array_key_exists('save', $_POST)) {
 
 		$errors = [];
-		print_r($_FILES); exit();
+		#print_r($_FILES); exit();
 
 		# be sure if a file was selected
 		if(empty($_FILES['pic']['name'])) {
