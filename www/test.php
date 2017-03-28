@@ -25,12 +25,12 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 
 		# be sure if a file was selected
 		if(empty($_FILES['pic']['name'])) {
-			$errors['pic'] = "please choose a file";
+			$errors[] = "please choose a file";
 		}
 
 		#check file size
 		if($_FILES['pic']['size'] > MAX_FILE_SIZE) {
-			$errors['pic'] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
+			$errors[] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
 		}
 		#print_r($_FILES);
 		if(empty($errors)){
