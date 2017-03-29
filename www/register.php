@@ -28,5 +28,4 @@
 			<input type="submit" name="register" value="register">
 		</form>
 
-		<h4 class="jumpto">Have an account? <a href="login.php">login</a></h4>
-	</div>
+		
