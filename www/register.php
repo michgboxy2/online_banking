@@ -14,8 +14,33 @@
 
 		#validate firstname
 		if(empty($_POST['fname'])){
-			$errors[] = "please enter your first name";
+			$errors[] = "please enter your first name</br>" ;
+
 		}
+
+		
+
+		if(empty($_POST['lname'])){
+			$errors[] = "please enter your last name</br>";
+		}
+
+		if(empty($_POST['email'])){
+			$errors[] = "please enter your email</br>";
+		}
+
+		if(empty($_POST['password'])){
+			$errors[] = "please enter your password</br>";
+		}
+
+		if(empty($_POST['pword'])){
+			$errors[] = "please confirm your password</br>";
+		} else {
+			$pword = md5(mysqli_real_escape_string($db, $_POST['pword']));
+		}
+
+
+
+
 
 		if(empty($errors)){
 			//do database stuff
