@@ -7,6 +7,24 @@
 	
 	include 'includes/header.php';
 	#include 'styles/styles.css';
+
+	if(array_key_exists('register', $_POST)){
+		# cache errors
+		$errors = [];
+
+		#validate firstname
+		if(empty($_POST['fname'])){
+			$errors[] = "please enter your first name";
+		}
+
+		if(empty($errors)){
+			//do database stuff
+		} else {
+			foreach($errors as $err){
+				echo $err;
+			}
+		}
+	}
 ?>
 
 
