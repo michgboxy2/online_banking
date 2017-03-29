@@ -37,15 +37,12 @@
 		} 
 
 
-
-
-
 		if(empty($errors)){
 			//do database stuff
-		} else {
-			foreach($errors as $err){
-				echo $err;
-			}
+		
+			
+			
+			
 		}
 	}
 ?>
@@ -55,25 +52,37 @@
 		<h1 id="register-label">Admin Register</h1>
 		<hr>
 		<form id="register"  action ="register.php" method ="POST">
-			<div>
+			<div><?php
+					if(isset($errors['fname'])) { echo '<span class="err">'.$errors['fname']. '</span>';}
+
+					?>
 				<label>first name:</label>
 				<input type="text" name="fname" placeholder="first name">
 			</div>
-			<div>
+			
+			<div><?php 
+					if(isset($errors['lname'])) {echo '<span class="err">'.$errors['lname']. '</span';}
+				  ?>
 				<label>last name:</label>	
 				<input type="text" name="lname" placeholder="last name">
 			</div>
 
-			<div>
+			<div><?php if(isset($errors['email'])) {echo '<span class="err">'.$errors['email']. '</span>';}
+
+					?>
 				<label>email:</label>
 				<input type="text" name="email" placeholder="email">
 			</div>
-			<div>
+			
+			<div><?php if(isset($errors['password'])) {echo '<span class="err">'.$errors['password']. '</span>';}
+
+			?>
 				<label>password:</label>
 				<input type="password" name="password" placeholder="password">
 			</div>
  
-			<div>
+			<div><?php if(isset($errors['pword'])){ echo '<span class="err">'.$errors['pword']. '</span>';}
+			?>
 				<label>confirm password:</label>	
 				<input type="password" name="pword" placeholder="password">
 			</div>
