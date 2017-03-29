@@ -2,6 +2,7 @@
 	#include header
 	
 	include 'includes/header.php';
+	#include 'styles/styles.php';
 
 
 ?>
