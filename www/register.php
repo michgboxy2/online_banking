@@ -1,10 +1,12 @@
 <?php
+
+	#title
+	$page_title = "Register";
+
 	#include header
 	
 	include 'includes/header.php';
-	#include 'styles/styles.php';
-
-
+	#include 'styles/styles.css';
 ?>
 
 

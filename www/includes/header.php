@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Register</title>
-	<!DOCTYPE html>
+	<title><?php echo $page_title; ?></title>
+	
 <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 </head>
 <body>

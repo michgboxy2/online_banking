@@ -1,5 +1,9 @@
 <?php
 
+#title
+
+$page_title = "login";
+
 include 'includes/header.php';
 
 ?>
