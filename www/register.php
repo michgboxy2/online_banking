@@ -32,11 +32,9 @@
 			$errors[] = "please enter your password</br>";
 		}
 
-		if(empty($_POST['pword'])){
+		if(empty($_POST['pword']) && $_POST['pword'] != $_POST['password']){
 			$errors[] = "please confirm your password</br>";
-		} else {
-			$pword = md5(mysqli_real_escape_string($db, $_POST['pword']));
-		}
+		} 
 
 
 
