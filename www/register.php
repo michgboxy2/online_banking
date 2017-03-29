@@ -14,26 +14,26 @@
 
 		#validate firstname
 		if(empty($_POST['fname'])){
-			$errors[] = "please enter your first name</br>" ;
+			$errors['fname'] = "please enter your first name</br>" ;
 
 		}
 
 		
 
 		if(empty($_POST['lname'])){
-			$errors[] = "please enter your last name</br>";
+			$errors['lname'] = "please enter your last name</br>";
 		}
 
 		if(empty($_POST['email'])){
-			$errors[] = "please enter your email</br>";
+			$errors['email'] = "please enter your email</br>";
 		}
 
 		if(empty($_POST['password'])){
-			$errors[] = "please enter your password</br>";
+			$errors['password'] = "please enter your password</br>";
 		}
 
-		if(empty($_POST['pword']) && $_POST['pword'] != $_POST['password']){
-			$errors[] = "please confirm your password</br>";
+		if($_POST['password'] != $_POST['pword']){
+			$errors['pword'] = "passwords do not match</br>";
 		} 
 
 
