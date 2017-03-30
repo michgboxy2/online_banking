@@ -36,6 +36,10 @@
 			$errors['email'] = "please enter your email</br>";
 		}
 
+		if(doesEmailExist($conn, $_POST['email'])){
+			$errors['email'] = "email already exists";
+		}
+
 		if(empty($_POST['password'])){
 			$errors['password'] = "please enter your password</br>";
 		}
@@ -79,6 +83,8 @@
 			
 			
 		}
+
+
 	}
 ?>
 
