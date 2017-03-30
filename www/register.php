@@ -47,6 +47,10 @@
 			#eliminate unwanted spaces from values in the $_post array
 
 			$clean = array_map('trim', $_POST);
+
+			#hash the password
+
+			$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
 		
 			
 			
