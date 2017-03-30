@@ -52,9 +52,13 @@
 
 			$clean = array_map('trim', $_POST);
 
+			#register admin
+
+			doAdminRegister($conn, $clean);
+
 			#hash the password
 
-			$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
+			/*$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
 
 			#insert data
 
@@ -69,7 +73,7 @@
 
 				];
 
-				$stmt->execute($data);
+				$stmt->execute($data); */
 		
 			
 			
