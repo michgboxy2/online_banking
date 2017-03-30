@@ -20,4 +20,29 @@
 		$stmt-> execute($data);
 
 	}
+
+	function doesEmailExist($dbconn, $email) {
+		$result = false;
+
+		$stmt = $dbconn->prepare("SELECT email FROM admin WHERE email =:e");
+
+		# bind params
+
+		$stmt->bindparam(":e", $email);
+		$stmt->execute();
+
+		#get number of rows returned
+		$count = $stmt->rowCount();
+
+		if($count > 0) {
+			$result = true;
+		}
+
+		return $result;
+
+
+
+
+
+	}
 ?>
