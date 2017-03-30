@@ -6,17 +6,35 @@ $page_title = "login";
 
 include 'includes/header.php';
 
+	if(array_key_exists('register', $_POST)){
+
+		$error = [];
+
+	if(empty($_POST['email'])){
+
+		$error['email'] = "please enter email"; 
+	}
+
+	if(empty($_POST['password'])){
+
+		$error['password'] = "please enter password"; 
+	}
+
+
+
+	}
+
 ?>
 
 <div class="wrapper">
 		<h1 id="register-label">Admin Login</h1>
 		<hr>
 		<form id="register"  action ="login.php" method ="POST">
-			<div>
+			<div><?php if(isset($error['email'])){echo '<span class="err">'.$error['email']. '</span>';}  ?>
 				<label>email:</label>
 				<input type="text" name="email" placeholder="email">
 			</div>
-			<div>
+			<div><?php if(isset($error['password'])){echo '<span class="err">'.$error['password']. '</span>';}  ?>
 				<label>password:</label>
 				<input type="password" name="password" placeholder="password">
 			</div>
