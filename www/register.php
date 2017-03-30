@@ -7,6 +7,10 @@
 
 	include 'includes/db.php';
 
+	#load functions
+
+	include 'includes/function.php';
+
 	#include header
 	
 	include 'includes/header.php';
