@@ -18,6 +18,24 @@ include 'includes/header.php';
 	if(empty($_POST['password'])){
 
 		$error['password'] = "please enter password"; 
+
+		$clean = array_map('trim', $_POST);
+
+		$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
+
+		#pull data
+
+		$stmt = $conn->prepare("SELECT FROM admin(email, password) WHERE email = :e, AND password = :h ");
+
+		#bind params
+
+		$data = [
+		':e' => $clean['email'],
+		':h' => $hash;
+
+		];
+
+		$stmt->execute($data);
 	}
 
 
