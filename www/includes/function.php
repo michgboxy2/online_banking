@@ -46,19 +46,15 @@
 
 	}
 
-	function displayErrors($inp){
+	function displayErrors($dummy, $what){
+					$result = "";
+		
+				if(isset($dummy[$what])) {
 
-		if(isset($inp['fname'])) { echo '<span class="err">'.$inp['fname']. '</span>';}
-
-		if(isset($inp['lname'])) {echo '<span class="err">'.$inp['lname']. '</span';}
-
-		if(isset($inp['email'])) {echo '<span class="err">'.$inp['email']. '</span>';}
-
-		if(isset($inp['password'])) {echo '<span class="err">'.$inp['password']. '</span>';}
-
-		if(isset($inp['pword'])){ echo '<span class="err">'.$inp['pword']. '</span>';}
-
-	}
+				$result = '<span class="err">'.$dummy[$what]. '</span>';}
+	
+					return $result;
+}
 
 
 	function fileupload($in){
@@ -83,43 +79,35 @@
 			$errors[] = "file upload failed";
 
 		}
+}
 
-
-		function adminLogin($dconn, $log){
-
-
-			$log = array_map('trim', $_POST);
-
-		$hash = password_hash($log['password'], PASSWORD_BCRYPT);
+		function adminLogin($dbconn, $enter){
 
 		#pull data
 
-		$stmt = $dconn->prepare("SELECT * FROM admin WHERE email = :e AND hash = :h ");
-		$success = "login successful";
-		header("location:home.php?success=$success");
+		$statement = $dbconn->prepare("SELECT * FROM admin WHERE email = :em");
+		
+				#bind params
+		$statement->bindparam(":em", $enter['email']);
+		$statement->execute();
 
-		#bind params
+		$count = $statement->rowcount();
 
-		$data = [
-		':e' => $log['email'],
-		':h' => $hash
+		if($count == 1) {
+			$row = $statement->fetch(PDO::FETCH_ASSOC);
+			
+			if(password_verify($enter['password'], $row['hash'])){
 
-		];
-
-		$stmt->execute($data); 
-
-
-
-
-
-
+				$_SESSION['id'] = $row['admin_id'];
+				$_SESSION['email'] = $row['email'];
+				header("location:home.php");
+			} else {
+				$login_error = "wrong email or password";
+				header("location:login.php?login_error=$login_error");
+			}
+		
+		
 		}
-
-
-
-
-
-
 
 	}
 

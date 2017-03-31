@@ -16,10 +16,10 @@
 	include 'includes/header.php';
 	#include 'styles/styles.css';
 
-
+		$errors = [];
 	if(array_key_exists('register', $_POST)){
 		# cache errors
-		$errors = [];
+		
 
 		#validate firstname
 		if(empty($_POST['fname'])){
@@ -95,8 +95,13 @@
 		<hr>
 		<form id="register"  action ="register.php" method ="POST">
 			<div> <?php
-					if(isset($errors['fname'])) { echo '<span class="err">'.$errors['fname']. '</span>';}
-					
+
+
+					#if(isset($errors['fname'])) { echo '<span class="err">'.$errors['fname']. '</span>';}
+					$display = displayErrors($errors,'fname');
+
+					echo $display;
+
 					?>
 
 				<label>first name:</label>

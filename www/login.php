@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 #title
 
@@ -23,11 +24,15 @@ include 'includes/header.php';
 
 		$error['password'] = "please enter password"; 
 
-		adminLogin($clean);
+		if(empty($errors)){
 
-		/*$clean = array_map('trim', $_POST);
+		
 
-		$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
+		$clean = array_map('trim', $_POST);
+
+		adminLogin($conn, $clean);
+
+		/*$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
 
 		#pull data
 
@@ -45,7 +50,7 @@ include 'includes/header.php';
 
 	}
 
-
+}
 
 	}
 
