@@ -27,15 +27,15 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 
 	if(array_key_exists('save', $_POST)) {
 
-		fileupload($_FILES, $errors);
+		fileupload($_FILES, $errors, 'pic');
 
 				#print_r($_FILES); exit();
 
 		# be sure if a file was selected
-		/*if(empty($_FILES['pic']['name'])) {
+		if(empty($_FILES['pic']['name'])) {
 			$errors[] = "please choose a file";
 		}
-
+			/*
 		#check file size
 		if($_FILES['pic']['size'] > MAX_FILE_SIZE) {
 			$errors[] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
@@ -61,18 +61,19 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 		}*/ 
 
 		#print_r($_FILES);
-		/*if(empty($errors)){
+		if(empty($errors)){
 			echo "done";
 		} else {
 			foreach ($errors as $err){
 				echo $err. '</br>';
 			}
-		}*/
+		}
 	}
 
 ?>
 
 <form id="register" method="POST" enctype="multipart/form-data">
+<?php if(isset($errors['pic'])){ echo '<span class="err">'.$errors['pic']. '</span>';}  ?>
 <p>please upload a file</p>
 <input type="file" name="pic">
 

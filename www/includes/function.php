@@ -57,7 +57,7 @@
 }
 
 
-	function fileupload($in, $amp){
+	function fileupload($in, $amp, $tom){
 
 		define("MAX_FILE_SIZE", "2097152");
 
@@ -66,40 +66,40 @@
 
 
 		# be sure if a file was selected
-		if(empty($in['pic']['name'])) {
-			$amp[] = "please choose a file";
-		}
+		#if(empty($in['pic']['name'])) {
+			$amp[$tom] = "please choose a file";
+		#}
 
 		#check file size
-		if($in['pic']['size'] > MAX_FILE_SIZE) {
-			$amp[] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
+		if($in[$tom]['size'] > MAX_FILE_SIZE) {
+			$amp[$tom] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
 		}
 
-		if(!in_array($in['pic']['type'], $ext)){
-			$amp[] = "invalid file type";
+		if(!in_array($in[$tom]['type'], $ext)){
+			$amp[$tom] = "invalid file type";
 		}
 
 		#generate random number to append
 		$rnd = rand(0000000000, 9999999999);
 
 		# strip filename for spaces
-		$strip_name = str_replace(" ", "_", $in['pic']['name']);
+		$strip_name = str_replace(" ", "_", $in[$tom]['name']);
 
 		$filename = $rnd.$strip_name;
 		$destination = 'uploads/'.$filename;
 
-		if(!move_uploaded_file($in['pic']['tmp_name'], $destination)) {
+		if(!move_uploaded_file($in[$tom]['tmp_name'], $destination)) {
 			
-			$amp[] = "file upload failed";
+			$amp[$tom] = "file upload failed";
 		}
 
-		if(empty($amp)){
+		/*if(empty($amp)){
 			echo "done";
 		} else {
 			foreach ($amp as $err){
 				echo $err. '</br>';
 			}
-		}
+		}*/
 }
 
 		function adminLogin($dbconn, $enter){
