@@ -1,5 +1,7 @@
 <?php #test.php sandbox
 
+include 'includes/function.php';
+
 /*define('DBNAME', 'store');
 define('DBUSER', 'root');
 define('DBPASS', 'root');
@@ -38,7 +40,8 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 		}
 
 		#check extension
-		if(!in_array($_FILES['pic']['type'], $ext)){
+		fileupload($_FILES);
+		/* if(!in_array($_FILES['pic']['type'], $ext)){
 			$errors[] = "invalid file type";
 		}
 
@@ -53,7 +56,7 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 
 		if(!move_uploaded_file($_FILES['pic']['tmp_name'], $destination)) {
 			$errors[] = "file upload failed";
-		}
+		}*/ 
 
 		#print_r($_FILES);
 		if(empty($errors)){

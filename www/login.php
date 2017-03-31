@@ -4,6 +4,10 @@
 
 $page_title = "login";
 
+include 'includes/db.php';
+
+include 'includes/function.php';
+
 include 'includes/header.php';
 
 	if(array_key_exists('register', $_POST)){
@@ -19,23 +23,26 @@ include 'includes/header.php';
 
 		$error['password'] = "please enter password"; 
 
-		$clean = array_map('trim', $_POST);
+		adminLogin($clean);
+
+		/*$clean = array_map('trim', $_POST);
 
 		$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
 
 		#pull data
 
-		$stmt = $conn->prepare("SELECT FROM admin(email, password) WHERE email = :e, AND password = :h ");
+		$stmt = $conn->prepare("SELECT * FROM admin WHERE email = :e AND hash = :h ");
 
 		#bind params
 
 		$data = [
 		':e' => $clean['email'],
-		':h' => $hash;
+		':h' => $hash
 
 		];
 
-		$stmt->execute($data);
+		$stmt->execute($data); */
+
 	}
 
 

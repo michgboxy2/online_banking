@@ -16,6 +16,7 @@
 	include 'includes/header.php';
 	#include 'styles/styles.css';
 
+
 	if(array_key_exists('register', $_POST)){
 		# cache errors
 		$errors = [];
@@ -93,16 +94,18 @@
 		<h1 id="register-label">Admin Register</h1>
 		<hr>
 		<form id="register"  action ="register.php" method ="POST">
-			<div><?php
+			<div> <?php
 					if(isset($errors['fname'])) { echo '<span class="err">'.$errors['fname']. '</span>';}
-
+					
 					?>
+
 				<label>first name:</label>
 				<input type="text" name="fname" placeholder="first name">
 			</div>
 			
 			<div><?php 
 					if(isset($errors['lname'])) {echo '<span class="err">'.$errors['lname']. '</span';}
+
 				  ?>
 				<label>last name:</label>	
 				<input type="text" name="lname" placeholder="last name">
