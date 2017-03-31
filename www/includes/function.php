@@ -57,12 +57,26 @@
 }
 
 
-	function fileupload($in){
+	function fileupload($in, $amp){
+
+		define("MAX_FILE_SIZE", "2097152");
+
 
 		$ext = ["image/jpg", "image/jpeg", "image/png"];
 
+
+		# be sure if a file was selected
+		if(empty($in['pic']['name'])) {
+			$amp[] = "please choose a file";
+		}
+
+		#check file size
+		if($in['pic']['size'] > MAX_FILE_SIZE) {
+			$amp[] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
+		}
+
 		if(!in_array($in['pic']['type'], $ext)){
-			$errors[] = "invalid file type";
+			$amp[] = "invalid file type";
 		}
 
 		#generate random number to append
@@ -76,8 +90,15 @@
 
 		if(!move_uploaded_file($in['pic']['tmp_name'], $destination)) {
 			
-			$errors[] = "file upload failed";
+			$amp[] = "file upload failed";
+		}
 
+		if(empty($amp)){
+			echo "done";
+		} else {
+			foreach ($amp as $err){
+				echo $err. '</br>';
+			}
 		}
 }
 

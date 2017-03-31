@@ -19,28 +19,30 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 		echo $e->getMessage();
 } */
 	#MAX FILE SIZE
-	define("MAX_FILE_SIZE", "2097152");
+	/*define("MAX_FILE_SIZE", "2097152");
 
 	#ALLOWED EXTENSION
-	$ext = ["image/jpg", "image/jpeg", "image/png"];
+	$ext = ["image/jpg", "image/jpeg", "image/png"];*/
+		$errors = [];
 
 	if(array_key_exists('save', $_POST)) {
 
-		$errors = [];
-		#print_r($_FILES); exit();
+		fileupload($_FILES, $errors);
+
+				#print_r($_FILES); exit();
 
 		# be sure if a file was selected
-		if(empty($_FILES['pic']['name'])) {
+		/*if(empty($_FILES['pic']['name'])) {
 			$errors[] = "please choose a file";
 		}
 
 		#check file size
 		if($_FILES['pic']['size'] > MAX_FILE_SIZE) {
 			$errors[] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
-		}
+		}*/
 
 		#check extension
-		fileupload($_FILES);
+		#fileupload($_FILES, $errors);
 		/* if(!in_array($_FILES['pic']['type'], $ext)){
 			$errors[] = "invalid file type";
 		}
@@ -59,13 +61,13 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 		}*/ 
 
 		#print_r($_FILES);
-		if(empty($errors)){
+		/*if(empty($errors)){
 			echo "done";
 		} else {
 			foreach ($errors as $err){
 				echo $err. '</br>';
 			}
-		}
+		}*/
 	}
 
 ?>
