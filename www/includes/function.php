@@ -64,20 +64,17 @@
 
 		$ext = ["image/jpg", "image/jpeg", "image/png"];
 
-
-		# be sure if a file was selected
-		#if(empty($in['pic']['name'])) {
 			$amp[$tom] = "please choose a file";
-		#}
+	
 
 		#check file size
 		if($in[$tom]['size'] > MAX_FILE_SIZE) {
 			$amp[$tom] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
 		}
 
-		if(!in_array($in[$tom]['type'], $ext)){
+		/*if(!in_array($in[$tom]['type'], $ext)){
 			$amp[$tom] = "invalid file type";
-		}
+		}*/
 
 		#generate random number to append
 		$rnd = rand(0000000000, 9999999999);
@@ -93,26 +90,20 @@
 			$amp[$tom] = "file upload failed";
 		}
 
-		/*if(empty($amp)){
-			echo "done";
-		} else {
-			foreach ($amp as $err){
-				echo $err. '</br>';
-			}
-		}*/
-}
+		}
 
 		function adminLogin($dbconn, $enter){
 
 		#pull data
 
-		$statement = $dbconn->prepare("SELECT * FROM admin WHERE email = :em");
+		$statement = $dbconn->prepare("SELECT * FROM admin WHERE email=:em");
 		
 				#bind params
-		$statement->bindparam(":em", $enter['email']);
+		$statement->bindParam(":em", $enter['email']);
 		$statement->execute();
 
-		$count = $statement->rowcount();
+		$count = $statement->rowCount();
+		#print_r($count); exit();
 
 		if($count == 1) {
 			$row = $statement->fetch(PDO::FETCH_ASSOC);
@@ -121,16 +112,48 @@
 
 				$_SESSION['id'] = $row['admin_id'];
 				$_SESSION['email'] = $row['email'];
-				header("location:home.php");
+				header("Location:home.php");
+			
 			} else {
 				$login_error = "wrong email or password";
-				header("location:login.php?login_error=$login_error");
+				header("Location:login.php?login_error=$login_error");
 			}
 		
-		
+		}
 		}
 
-	}
+	
+
+
+	/*function doAdminLogin($dbconn, $input){
+		//INSERT DATA INTO TABLE
+
+		$stmt = $dbconn->prepare("SELECT * FROM admin WHERE email = :e ");
+
+		$stmt->bindparam(":e", $input['email']);
+		$stmt->execute();
+		$count = $stmt->rowCount();
+
+		if($count == 1){
+
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			if(password_verify($input['password'], $result['hash'])){
+				header("Location:home.php");
+
+			}else{
+				$login_error = "invalid username and/ or password";
+				header("Location:login.php?login_error=$login_error");
+			}
+		}
+
+
+
+
+
+
+
+	}*/
 
 	?>
 
