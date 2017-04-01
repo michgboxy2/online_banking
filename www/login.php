@@ -11,10 +11,12 @@ include 'includes/function.php';
 
 include 'includes/header.php';
 
+	
+	$error = [];
+
 	if(array_key_exists('register', $_POST)){
 
-		$error = [];
-
+		
 	if(empty($_POST['email'])){
 
 		$error['email'] = "please enter email"; 
@@ -24,7 +26,9 @@ include 'includes/header.php';
 
 		$error['password'] = "please enter password"; 
 
-		if(empty($errors)){
+	}
+
+		if(empty($error)){
 
 		
 
@@ -52,19 +56,26 @@ include 'includes/header.php';
 
 }
 
-	}
-
 ?>
 
 <div class="wrapper">
 		<h1 id="register-label">Admin Login</h1>
 		<hr>
 		<form id="register"  action ="login.php" method ="POST">
-			<div><?php if(isset($error['email'])){echo '<span class="err">'.$error['email']. '</span>';}  ?>
+			<div><?php #if(isset($error['email'])){echo '<span class="err">'.$error['email']. '</span>';}
+					$display = displayErrors($error,'email');
+
+					echo $display;
+			  ?>
 				<label>email:</label>
 				<input type="text" name="email" placeholder="email">
 			</div>
-			<div><?php if(isset($error['password'])){echo '<span class="err">'.$error['password']. '</span>';}  ?>
+			<div><?php #if(isset($error['password'])){echo '<span class="err">'.$error['password']. '</span>';} 
+					$display = displayErrors($error,'password');
+
+					echo $display;
+
+			 ?>
 				<label>password:</label>
 				<input type="password" name="password" placeholder="password">
 			</div>
