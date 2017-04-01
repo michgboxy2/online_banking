@@ -19,10 +19,10 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 		echo $e->getMessage();
 } */
 	#MAX FILE SIZE
-	/*define("MAX_FILE_SIZE", "2097152");
+	/*define("MAX_FILE_SIZE", "2097152"); */
 
 	#ALLOWED EXTENSION
-	$ext = ["image/jpg", "image/jpeg", "image/png"];*/
+	$ext = ["image/jpg", "image/jpeg", "image/png"];
 		$errors = [];
 
 	if(array_key_exists('save', $_POST)) {
@@ -43,9 +43,9 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 
 		#check extension
 		#fileupload($_FILES, $errors);
-		/* if(!in_array($_FILES['pic']['type'], $ext)){
+		if(!in_array($_FILES['pic']['type'], $ext)){
 			$errors[] = "invalid file type";
-		}
+		}/*
 
 		#generate random number to append
 		$rnd = rand(0000000000, 9999999999);
@@ -73,7 +73,12 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 ?>
 
 <form id="register" method="POST" enctype="multipart/form-data">
-<?php if(isset($errors['pic'])){ echo '<span class="err">'.$errors['pic']. '</span>';}  ?>
+<?php #if(isset($errors['pic'])){ echo '<span class="err">'.$errors['pic']. '</span>';}
+	$display = displayErrors($errors,'pic');
+
+					#echo $display;
+
+  ?>
 <p>please upload a file</p>
 <input type="file" name="pic">
 
