@@ -10,13 +10,13 @@ include 'includes/function.php';
 
 <?php
 
+$error = [];
 
 
 if(array_key_exists('add', $_POST)){
 
-	$error = [];
-
-	/*if(empty($_POST['category'])){
+	
+	if(empty($_POST['category'])){
 
 		$error['category'] = "please enter a category name";
 	}
@@ -26,33 +26,9 @@ if(array_key_exists('add', $_POST)){
 
 		$clean = array_map('trim',$_POST);
 
-		#insert data
+		addcategory($conn, $clean);
 
-		$stmt = $conn->prepare("INSERT INTO categories VALUES(:id, :ca)");
-
-		#bind params
-
-		$data = [
-
-	
-
-		':id' => $clean[NULL],
-		':ca' => $clean['category'],
-			];
-		$stmt->execute($data);
-
-		$success = "category added successfully";
-		header("Location:categories.php");
-
-
-	} */
-
-
-
-
-
-
-
+}
 
 }
 
@@ -107,7 +83,7 @@ if(array_key_exists('add', $_POST)){
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2> ADD CATEGORY</h2></br>
 			</br>
 			
-<?php if(isset($error['category'])){ echo '<span class="err">'.$error['category'].'</span>';}?>
+<?php displayErrors($error,'category'); ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="category" placeholder="category name">
 <input type="submit" name="add" value="submit">
 
