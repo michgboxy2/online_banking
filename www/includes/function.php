@@ -64,10 +64,8 @@
 
 		$ext = ["image/jpg", "image/jpeg", "image/png"];
 
-			$amp[$tom] = "please choose a file";
-	
-
-		#check file size
+				
+						#check file size
 		if($in[$tom]['size'] > MAX_FILE_SIZE) {
 			$amp[$tom] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
 		}
@@ -122,38 +120,43 @@
 		}
 		}
 
+		function addcategory($dbconn, $hold){
+
+
+					#insert data
+
+		$stmt = $dbconn->prepare("INSERT INTO categories VALUES(:id, :ca)");
+
+		#bind params
+
+		$data = [
+
 	
 
+		':id' => $hold[NULL],
+		':ca' => $hold['category'],
+			];
+		$stmt->execute($data);
 
-	/*function doAdminLogin($dbconn, $input){
-		//INSERT DATA INTO TABLE
+		$success = "category added successfully";
+		header("Location:categories.php");
 
-		$stmt = $dbconn->prepare("SELECT * FROM admin WHERE email = :e ");
 
-		$stmt->bindparam(":e", $input['email']);
-		$stmt->execute();
-		$count = $stmt->rowCount();
+	}
 
-		if($count == 1){
 
-			$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			if(password_verify($input['password'], $result['hash'])){
-				header("Location:home.php");
 
-			}else{
-				$login_error = "invalid username and/ or password";
-				header("Location:login.php?login_error=$login_error");
-			}
+
+
+
+
+
+
+
+
+
 		}
-
-
-
-
-
-
-
-	}*/
 
 	?>
 
