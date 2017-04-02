@@ -20,11 +20,36 @@ include 'includes/function.php';
 if(array_key_exists('edit', $_POST)){
 
 	$error = [];
+if(empty($_POST['edit'])){
 
+	$error['edit'] = "please input an edit";
+
+}
+
+	if(empty($error)){
+
+		$stmt = $conn->prepare("SELECT * FROM categories WHERE category_id = :id");
+
+		#bind params
+		$stmt->bindparam(":id", $result['category_id']);
+		$stmt->execute();
+		for($i=0; $result = $stmt->fetch(); $i++){
+			":id" = $result['category_id'];
+		}
+
+		#$clean = array_map('trim', $_POST);
+
+	}
 
 
 }
 
+
+?>
+
+<?php
+
+include 'includes/db.php';
 
 ?>
 
@@ -45,6 +70,8 @@ if(array_key_exists('edit', $_POST)){
 
 
 </form>
+
+
 
 </body>
 </html>

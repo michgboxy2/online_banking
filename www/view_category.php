@@ -43,7 +43,7 @@ include 'includes/function.php';
 						<td><?php echo $result['category_id']; ?></td>
 						<td><?php echo $result['category_name']; ?></td>
 						
-						<td><a href="#">edit</a></td>
+						<td><a href="edit_category.php">edit</a></td>
 						<td><a href="#">delete</a></td>
 					</tr>
 
@@ -97,4 +97,6 @@ include 'includes/function.php';
 
 
 	</form>
+
+
 
