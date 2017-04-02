@@ -25,7 +25,7 @@ include 'includes/function.php';
 				<thead>
 					<tr>
 						<th>category id</th>
-						<th>categoty name</th>
+						<th>category name</th>
 						
 					</tr>
 				</thead>
@@ -43,7 +43,7 @@ include 'includes/function.php';
 						<td><?php echo $result['category_id']; ?></td>
 						<td><?php echo $result['category_name']; ?></td>
 						
-						<td><a href="edit_category.php">edit</a></td>
+						<td><a href="edit.php">edit</a></td>
 						<td><a href="#">delete</a></td>
 					</tr>
 

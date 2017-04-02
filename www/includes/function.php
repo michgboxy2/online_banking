@@ -145,6 +145,26 @@
 	}
 
 
+	function editcategory($dbconn, $jule){
+
+		#$stmt = $dbconn->prepare("UPDATE categories SET category_name = :ca WHERE category_id = :id");
+		$stmt = $dbconn->prepare("INSERT INTO categories VALUES(:id, :ca)");
+		#bind params
+
+		$data = [
+
+		':id' => $jule[NULL],
+		':ca' => $jule['category'],
+
+		];
+
+		$stmt->execute($data);
+		$success = "category added successfully";
+		header("Location:view_categories.php");
+
+	}
+
+
 	?>
 
 	
