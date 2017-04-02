@@ -16,6 +16,21 @@ include 'includes/function.php';
 </head>
 <body>
 
+<<<<<<< HEAD
+=======
+<?php
+if(array_key_exists('edit', $_POST)){
+
+	$error = [];
+
+
+
+}
+
+
+?>
+
+>>>>>>> validating the edit category form
 <form id="edit" action="view_category.php" method="post">
 
 
@@ -25,8 +40,14 @@ include 'includes/function.php';
 
 
 
+<<<<<<< HEAD
 <label>EDIT</label>
 <input type="text" name="edit" placeholder="edit">
+=======
+<!-- <label>EDIT</label> -->
+<input type="text" name="edit" placeholder="edit">
+<input type="submit" name="edit" value="EDIT">
+>>>>>>> validating the edit category form
 	
 
 
