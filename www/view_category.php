@@ -6,11 +6,11 @@ include 'includes/cat_header.php';
 
 include 'includes/function.php';
 
-	$stmt = $conn->prepare("SELECT * FROM categories WHERE category_name = :ca");
+	$stmt = $conn->prepare("SELECT category_id, category_name FROM categories");
 
 	#bind params
 
-	$stmt->bindparam(":ca", $_POST['category_name']);
+	$stmt->bindparam(":ca", $clean['category_name']);
 
 	$stmt->execute();
 
@@ -18,12 +18,7 @@ include 'includes/function.php';
 
 	<form id="view" action="view_category.php" method="post">
 
-	<?php 
-
-	while($result = $stmt->fetch(PDO::FETCH_ASSOC));{ ?>
-
-
-	</section>
+</section>
 	<div class="wrapper">
 		<div id="stream">
 			<table id="tab">
@@ -35,6 +30,15 @@ include 'includes/function.php';
 					</tr>
 				</thead>
 				<tbody>
+	<?php 
+	for ($i=0; $result = $stmt->fetch(); $i++) { 
+		# code...
+	
+
+	#while($result = $stmt->fetchall());{ ?>
+
+
+	
 					<tr>
 						<td><?php echo $result['category_id']; ?></td>
 						<td><?php echo $result['category_name']; ?></td>
@@ -42,6 +46,8 @@ include 'includes/function.php';
 						<td><a href="#">edit</a></td>
 						<td><a href="#">delete</a></td>
 					</tr>
+
+					<?php }?>
           		</tbody>
 			</table>
 		</div>
@@ -54,7 +60,7 @@ include 'includes/function.php';
 
 
 
-		<?php }?>
+		
 
 		
 

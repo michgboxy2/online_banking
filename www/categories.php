@@ -56,18 +56,18 @@ if(array_key_exists('add', $_POST)){
 					<tr>
 						<th>category id</th>
 						<th>categoty name</th>
-						<th>date created</th>
-						<th>edit</th>
-						<th>delete</th>
+						<th>Date created</th>
+						<th>Edit</th>
+						<th>Delete</th>
 					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>the knowledge gap</td>
-						<td>maja</td>
-						<td>January, 10</td>
-						<td><a href="#">edit</a></td>
-						<td><a href="#">delete</a></td>
+				<!-- </thead> -->
+				<!-- <tbody> -->
+					<!-- <tr> -->
+						<!-- <td>the knowledge gap</td> -->
+						<!-- <td>maja</td> -->
+						<!-- <td>January, 10</td> -->
+						<!-- <td><a href="#">edit</a></td> -->
+						<!-- <td><a href="#">delete</a></td> -->
 					</tr>
           		</tbody>
 			</table>
