@@ -6,33 +6,89 @@ include 'includes/bookhead.php';
 
 include 'includes/function.php';
 
+/*$shuu = $conn->prepare("SELECT * FROM categories ");
+
+
+for($i=0; $row = $shuu->fetch(); $i++){?> 
+	
+	<?php }
+	$id = $row['category_id'];
+
+*/	
 
 ?>
 
+
+
+
 <?php
 
+	$error = [];
 if(array_key_exists('submit', $_POST)){
 
-	$error = [];
-
+	
 if(empty($_POST['btitle'])){
 
+	$error['btitle'] = "please enter the book title";
 
 }
 
+if(empty($_POST['bauthor'])){
+
+	$error['bauthor'] = "please enter author"; 
+}
+
+if(empty($_POST['cat_id'])){
+
+	$error['cat_id'] = "category id";
+}
+
+if(empty($_POST['bprice'])){
+
+	$error['bprice'] = "enter book price";
+}
+
+if(empty($_POST['year'])){
+
+	$error['year'] = "enter year";
+}
+
+if(empty($_POST['isbn'])){
+
+	$error['isbn'] = "enter isbn number";
+}
+
+if(empty($error)){
+
+$clean = array_map('trim', $_POST);
+
+$stmt = $conn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is)");
+#bind param
+$data = [
+
+":bt" => $clean['btitle'],
+":au" => $clean['bauthor'],
+":id" => $clean['cat_id'],
+":bpr" => $clean['bprice'],
+":yr" => $clean['year'],
+":is" => $clean['isbn'],
+];
+
+$stmt->execute($data);
+$success = "product added";
+header("location:home.php?success=$success");
 
 
-
-
-
-
-
-
+} 
+foreach($error as $err){
+	echo "<p>".$err. "</p>";
+}
 
 }
 
-
-
+if(isset($_GET['success'])){
+	echo "<p>".$_GET['success']. "</p>";
+}
 
 ?>
 
@@ -71,6 +127,7 @@ if(empty($_POST['btitle'])){
 
 <form id="add" action="add_product.php" method="post">
 
+<?php displayErrors($error, 'btitle'); ?>
 <label>BOOK TITLE:</label>
 <input type="text" name="btitle" placeholder="book name"/></br>
 </br>
@@ -79,7 +136,9 @@ if(empty($_POST['btitle'])){
 <input type="text" name="bauthor" placeholder="Author"/></br>
 </br>
 
-<input type="hidden" name="cat_id"></br>
+<label>category ID</label>
+<select></select>
+<input type="hidden" name="cat_id" placeholder="category ID"></br>
 
 <label>PRICE:</label>
 <input type="text" name="bprice" placeholder="Price of book"></br>
@@ -93,10 +152,9 @@ if(empty($_POST['btitle'])){
 <input type="text" name="isbn" placeholder="isbn"></br>
 </br>
 
-<input type="submit" name="submt" value="Add book">
+<input type="submit" name="submit" value="Add book">
 
 	
-
 
 
 
