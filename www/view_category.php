@@ -8,6 +8,8 @@ include 'includes/function.php';
 
 	$stmt = $conn->prepare("SELECT category_id, category_name FROM categories");
 
+	
+
 	#bind params
 
 	$stmt->bindparam(":ca", $clean['category_name']);
@@ -28,28 +30,27 @@ include 'includes/function.php';
 						<th>category name</th>
 						
 					</tr>
+					<?php    
+
+
+	$show = viewcategory($conn);
+
+	echo $show;
+
+	?>
 				</thead>
 				<tbody>
-	<?php 
-	for ($i=0; $result = $stmt->fetch(); $i++) { 
-		# code...
 	
-
-	#while($result = $stmt->fetchall());{ ?>
-
-
 	
-					<tr>
-						<td><?php echo $result['category_id']; ?></td>
-						<td><?php echo $result['category_name']; ?></td>
 						
-						<td><a href="edit.php">edit</a></td>
+						<td><a href="editform.php">edit</a></td>
 						<td><a href="#">delete</a></td>
 					</tr>
 
-					<?php }?>
+					
           		</tbody>
-			</table>
+          		
+		</table>
 		</div>
 
 

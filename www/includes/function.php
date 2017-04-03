@@ -144,25 +144,23 @@
 
 	}
 
+		function viewcategory($dbconn){
+			$result="";
 
-	function editcategory($dbconn, $jule){
+$stmt = $dbconn->prepare("SELECT category_id, category_name FROM categories");
 
-		#$stmt = $dbconn->prepare("UPDATE categories SET category_name = :ca WHERE category_id = :id");
-		$stmt = $dbconn->prepare("INSERT INTO categories VALUES(:id, :ca)");
-		#bind params
+$stmt->execute();
 
-		$data = [
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-		':id' => $jule[NULL],
-		':ca' => $jule['category'],
+		$result .= '<tr><td>'.$row['category_id'].'</td>';
+		$result .= '<td>'.$row['category_name'].'</td></tr>';
 
-		];
 
-		$stmt->execute($data);
-		$success = "category added successfully";
-		header("Location:view_categories.php");
+}
+	return $result;
 
-	}
+}
 
 
 	?>
