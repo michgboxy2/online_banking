@@ -144,6 +144,50 @@
 
 	}
 
+		function viewcategory($dbconn, $nor){
+
+			$stmt = $dbconn->prepare("SELECT category_id, category_name FROM categories");
+					$result="";
+	#bind params
+
+	$stmt->bindparam(":ca", $clean['category_name']);
+
+	$stmt->execute();
+
+
+
+
+	for ($i=0; $result = $stmt->fetch(); $i++) { 
+		# code...
+	
+
+	#while($result = $stmt->fetchall());{ ?>
+
+
+	
+					<tr>
+						<td><?php echo $result['category_id']; ?></td>
+						<td><?php echo $result['category_name']; ?></td>
+						
+						<td><a href="edit.php">edit</a></td>
+						<td><a href="#">delete</a></td>
+					</tr>
+
+					<?php }?>
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+
 
 	?>
 
