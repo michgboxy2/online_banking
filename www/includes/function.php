@@ -193,6 +193,44 @@ $stmt->execute();
 
 }
 
+	function addproduct($fibu, $kiki, $pie, $in){
+
+		define("MAX_FILE_SIZE", "2097152"); 
+
+$ext = ["image/jpeg", "image/jpg", "image/png"];
+
+	
+	if($fibu[$pie]['size'] > MAX_FILE_SIZE){
+
+		$in[$pie] = "FILE TOO LARGE".MAX_FILE_SIZE;
+	}
+
+	$rnd = rand(0000000000,9999999999);
+	$strip_name = str_replace("_", "", $fibu[$pie]['name']);
+	$filename = $rnd.$strip_name;
+	$destination = "uploads/".$filename;
+
+	if(!move_uploaded_file($fibu[$pie]['tmp_name'], $destination)){
+
+		$in[$pie] = "file upload failed";
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
+
 
 	?>
 
