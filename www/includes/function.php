@@ -169,6 +169,8 @@ $stmt->execute();
 		$stmt = $dbconn->prepare("SELECT * FROM book");
 		$stmt->execute();
 
+
+
 		while($row = $stmt->fetch()){
 
 
@@ -180,24 +182,16 @@ $stmt->execute();
 					$result.= 	'<td>' .$row['price']. '</td>';
 					$result.= 	'<td>' .$row['year_of_publication']. '</td>';
 					$result.= 	'<td>' .$row['isbn']. '</td>';
-					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td></tr>';
+					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td>';
+					$result.=  '<td><a href="edit_product.php">edit</a></td>';
+					$result.= 	'<td><a href="#">delete</a></td></tr>';
 
 		}
 
 
 		return $result;
 
-
-
-
-
-
-
-
-
-
-
-	}
+}
 
 
 	?>

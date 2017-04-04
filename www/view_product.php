@@ -45,9 +45,7 @@ $stmt->execute();
 
 
 
-						<td><a href="edit_product.php">edit</a></td>
-						<td><a href="#">delete</a></td>
-					</tr>
+						
 					
           		</tbody>
 			</table>

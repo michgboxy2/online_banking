@@ -18,6 +18,65 @@ for($i=0; $row = $shuu->fetch(); $i++){?>
 
 ?>
 
+<?php
+
+define("MAX_FILE_SIZE", "2097152"); 
+
+$ext = ["image/jpeg", "image/jpg", "image/png"];
+
+$error = [];
+
+if(array_key_exists('submit', $_POST)){
+
+	
+	if(empty($_FILES['pic']['name'])) {
+			$error[] = "please choose a file";
+	}
+
+	if(!in_array($_FILES['pic']['type'], $ext)){
+
+		$error['pic'] = "invalid file format";
+	}
+
+	#$print_r; exit();
+
+
+	if($_FILES['pic']['size'] > MAX_FILE_SIZE){
+
+		$error['pic'] = "FILE TOO LARGE".MAX_FILE_SIZE;
+	}
+
+	$rnd = rand(0000000000,9999999999);
+	$strip_name = str_replace("_", "", $_FILES['pic']['name']);
+	$filename = $rnd.$strip_name;
+	$destination = "uploads/".$filename;
+
+	if(!move_uploaded_file($_FILES['pic']['tmp_name'], $destination)){
+
+		$error['pic'] = "file upload failed";
+	}
+
+	if(empty($errors)){
+			echo "done";
+		} else {
+			foreach($errors as $err){
+				echo $err. '</br>';
+			}	
+
+
+}
+
+#$print_r; exit();
+
+
+
+
+}
+
+
+
+?>
+
 
 
 
@@ -38,9 +97,9 @@ if(empty($_POST['bauthor'])){
 	$error['bauthor'] = "please enter author"; 
 }
 
-if(empty($_POST['cat_id'])){
+if(empty($_POST['category'])){
 
-	$error['cat_id'] = "category id";
+	$error['category'] = "please select category id";
 }
 
 if(empty($_POST['bprice'])){
@@ -62,16 +121,17 @@ if(empty($error)){
 
 $clean = array_map('trim', $_POST);
 
-$stmt = $conn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is)");
+$stmt = $conn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fi)");
 #bind param
 $data = [
 
 ":bt" => $clean['btitle'],
 ":au" => $clean['bauthor'],
-":id" => $clean['cat_id'],
+":id" => $clean['category'],
 ":bpr" => $clean['bprice'],
 ":yr" => $clean['year'],
 ":is" => $clean['isbn'],
+":fi" => $destination,
 ];
 
 $stmt->execute($data);
@@ -102,6 +162,17 @@ if(isset($_GET['success'])){
 
 		</section>
 	<div class="wrapper">
+<!-- <form id="file" action="add_product.php" method="post" enctype="multipart/form-data"> -->
+<!-- <label>PLEASE SELECT FILE</label></br> -->
+<!-- <input type="file" name="pic"> -->
+<!-- <input type="submit" name="submit" value="upload file"> -->
+
+	
+
+
+
+
+</form>
 		<div id="stream">
 			<table id="tab">
 				<thead>
@@ -125,7 +196,16 @@ if(isset($_GET['success'])){
 			</table>
 		</div>
 
-<form id="add" action="add_product.php" method="post">
+
+
+<form id="file/add" action="add_product.php" method="post" enctype="multipart/form-data">
+<label>PLEASE SELECT FILE</label></br>
+<input type="file" name="pic"></br>
+</br>
+</br>
+
+<!-- <input type="submit" name="submit" value="upload file"> -->
+
 
 <?php displayErrors($error, 'btitle'); ?>
 <label>BOOK TITLE:</label>
@@ -137,7 +217,20 @@ if(isset($_GET['success'])){
 </br>
 
 <label>category ID</label>
-<select></select>
+<select name="category">
+<option>select category</option>
+<?php  $stmt = $conn->prepare("SELECT * FROM categories");
+
+$stmt->execute(); 
+for($i=0; $row = $stmt->fetch(); $i++){
+
+?>
+<option value="<?php echo $row['category_id']; ?>">
+<?php echo $row['category_id'];?></option>
+<?php } ?></select>
+
+
+
 <input type="hidden" name="cat_id" placeholder="category ID"></br>
 
 <label>PRICE:</label>
