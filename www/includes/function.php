@@ -144,49 +144,111 @@
 
 	}
 
-		function viewcategory($dbconn, $nor){
+		function viewcategory($dbconn){
+			$result="";
 
-			$stmt = $dbconn->prepare("SELECT category_id, category_name FROM categories");
-					$result="";
-	#bind params
+$stmt = $dbconn->prepare("SELECT category_id, category_name FROM categories");
 
-	$stmt->bindparam(":ca", $clean['category_name']);
+$stmt->execute();
 
-	$stmt->execute();
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-
-
-
-	for ($i=0; $result = $stmt->fetch(); $i++) { 
-		# code...
-	
-
-	#while($result = $stmt->fetchall());{ ?>
+		$result .= '<tr><td>'.$row['category_id'].'</td>';
+		$result .= '<td>'.$row['category_name'].'</td></tr>';
 
 
-	
-					<tr>
-						<td><?php echo $result['category_id']; ?></td>
-						<td><?php echo $result['category_name']; ?></td>
-						
-						<td><a href="edit.php">edit</a></td>
-						<td><a href="#">delete</a></td>
-					</tr>
+}
+	return $result;
 
-					<?php }?>
+}
+
+
+	function viewproduct($dbconn){
+		$result="";
+
+		$stmt = $dbconn->prepare("SELECT * FROM book");
+		$stmt->execute();
 
 
 
+		while($row = $stmt->fetch()){
 
 
-
-
-
-
-
-
+									
+					$result.= '<tr><td>' .$row['book_id']. '</td>';
+					$result.= 	'<td>' .$row['title']. '</td>';
+					$result.= 	'<td>' .$row['author']. '</td>';
+					$result.= '<td>' .$row['category_id']. '</td>';
+					$result.= 	'<td>' .$row['price']. '</td>';
+					$result.= 	'<td>' .$row['year_of_publication']. '</td>';
+					$result.= 	'<td>' .$row['isbn']. '</td>';
+					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td>';
+					$result.=  '<td><a href="edit_product.php">edit</a></td>';
+					$result.= 	'<td><a href="#">delete</a></td></tr>';
 
 		}
+
+
+		return $result;
+
+}
+
+	function addproduct($dbconn, $fibu, $kiki, $pie, $in){
+
+		define("MAX_FILE_SIZE", "2097152"); 
+
+$ext = ["image/jpeg", "image/jpg", "image/png"];
+
+	
+	if($fibu[$pie]['size'] > MAX_FILE_SIZE){
+
+		$in[$pie] = "FILE TOO LARGE".MAX_FILE_SIZE;
+	}
+
+	$rnd = rand(0000000000,9999999999);
+	$strip_name = str_replace("_", "", $fibu[$pie]['name']);
+	$filename = $rnd.$strip_name;
+	$destination = "uploads/".$filename;
+
+	if(!move_uploaded_file($fibu[$pie]['tmp_name'], $destination)){
+
+		$in[$pie] = "file upload failed";
+	}
+
+
+
+
+	$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fi)");
+#bind param
+$data = [
+
+":bt" => $kiki['btitle'],
+":au" => $kiki['bauthor'],
+":id" => $kiki['category'],
+":bpr" => $kiki['bprice'],
+":yr" => $kiki['year'],
+":is" => $kiki['isbn'],
+":fi" => $destination,
+];
+
+$stmt->execute($data);
+$success = "product added";
+header("location:home.php?success=$success");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
 
 
 	?>
