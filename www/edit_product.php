@@ -23,7 +23,7 @@ for($i=0; $row= $stmt->fetch(); $i++){
 
 <form id="edit" action="view_product.php" method="post" enctype="">
 
-<input type="text" name="category_name" placeholder="book title" value="<?php echo $row['title']; ?>">
+<input type="text" name="title" placeholder="book title" value="<?php echo $row['title']; ?>">
 <input type="text" name="author" placeholder="Author" value="<?php echo $row['author']; ?>">
 <input type="SELECT" name="category_id" placeholder="category_id" value="<?php echo $row['category_id'];  ?>">
 <input type="text" name="price" placeholder="price" value="<?php echo $row['price'];  ?>">
