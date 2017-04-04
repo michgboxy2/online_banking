@@ -163,6 +163,43 @@ $stmt->execute();
 }
 
 
+	function viewproduct($dbconn){
+		$result="";
+
+		$stmt = $dbconn->prepare("SELECT * FROM book");
+		$stmt->execute();
+
+		while($row = $stmt->fetch()){
+
+
+									
+					$result.= '<tr><td>' .$row['book_id']. '</td>';
+					$result.= 	'<td>' .$row['title']. '</td>';
+					$result.= 	'<td>' .$row['author']. '</td>';
+					$result.= '<td>' .$row['category_id']. '</td>';
+					$result.= 	'<td>' .$row['price']. '</td>';
+					$result.= 	'<td>' .$row['year_of_publication']. '</td>';
+					$result.= 	'<td>' .$row['isbn']. '</td>';
+					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td></tr>';
+
+		}
+
+
+		return $result;
+
+
+
+
+
+
+
+
+
+
+
+	}
+
+
 	?>
 
 	
