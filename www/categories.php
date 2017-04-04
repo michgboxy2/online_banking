@@ -84,6 +84,7 @@ if(array_key_exists('add', $_POST)){
 			</br>
 			
 <?php displayErrors($error,'category'); ?>
+<input type="hidden" name="category_id">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="category" placeholder="category name">
 <input type="submit" name="add" value="submit">
 
