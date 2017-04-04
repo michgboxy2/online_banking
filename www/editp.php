@@ -14,7 +14,7 @@ $yr = $_POST['year'];
 $is = $_POST['isbn'];
 $pic = $_POST['pic'];
 
-$stmt = $conn->("UPDATE book SET title, author, category_id, price, year_of_publication, isbn, filepath=:ti, :au, :id, :pr, :yr, :is, :pic WHERE book_id = :b");
+$stmt = $conn->prepare("UPDATE book SET title, author, category_id, price, year_of_publication, isbn, filepath=:ti, :au, :id, :pr, :yr, :is, :pic WHERE book_id = :b");
 
 $data = [
 
