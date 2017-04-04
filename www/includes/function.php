@@ -193,7 +193,7 @@ $stmt->execute();
 
 }
 
-	function addproduct($fibu, $kiki, $pie, $in){
+	function addproduct($dbconn, $fibu, $kiki, $pie, $in){
 
 		define("MAX_FILE_SIZE", "2097152"); 
 
@@ -215,6 +215,25 @@ $ext = ["image/jpeg", "image/jpg", "image/png"];
 		$in[$pie] = "file upload failed";
 	}
 
+
+
+
+	$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fi)");
+#bind param
+$data = [
+
+":bt" => $kiki['btitle'],
+":au" => $kiki['bauthor'],
+":id" => $kiki['category'],
+":bpr" => $kiki['bprice'],
+":yr" => $kiki['year'],
+":is" => $kiki['isbn'],
+":fi" => $destination,
+];
+
+$stmt->execute($data);
+$success = "product added";
+header("location:home.php?success=$success");
 
 
 
