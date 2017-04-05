@@ -21,7 +21,7 @@ for($i=0; $row= $stmt->fetch(); $i++){
 </head>
 <body>
 
-<form id="edit" action="editp.php" method="post" enctype="">
+<form id="edit" action="editp.php" method="post">
 
 <input type="text" name="title" placeholder="book title" value="<?php echo $row['title']; ?>">
 <input type="text" name="author" placeholder="Author" value="<?php echo $row['author']; ?>">

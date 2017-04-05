@@ -173,6 +173,17 @@ $stmt->execute();
 
 		while($row = $stmt->fetch()){
 
+			$bk_id = $row['book_id'];
+			$title = $row['title'];
+			$author = $row['author'];
+			$price = $row['price'];
+			$year = $row['year_of_publication'];
+			$isbn = $row['isbn'];
+			/*$stmt = $dbconn->prepare("SELECT category_id FROM categories WHERE category_name= :cn");
+			$stmt->bindparam(":cn", $row['category_name']);
+			$stmt->execute();
+			$row2 = $stmt->fetch();*/
+
 
 									
 					$result.= '<tr><td>' .$row['book_id']. '</td>';
@@ -184,7 +195,7 @@ $stmt->execute();
 					$result.= 	'<td>' .$row['isbn']. '</td>';
 					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td>';
 					$result.=  '<td><a href="edit_product.php">edit</a></td>';
-					$result.= 	'<td><a href="#">delete</a></td></tr>';
+					$result.= 	'<td><a href="delete_product.php">delete</a></td></tr>';
 
 		}
 
