@@ -15,10 +15,6 @@ $pic = $_POST['pic'];
 
 */
 
-if(isset($_GET['action'])){
-
-		if($_GET['action'] = "edit");
-	}
 
 
 $stmt = $conn->prepare("UPDATE book SET title =:ti, author =:au, category_id = :id, price =:pr, year_of_publication =:yr, isbn =:is, filepath=:ti WHERE book_id = :b");
@@ -32,15 +28,15 @@ $data = [
 ":yr" => $_POST['year'],
 ":is" => $_POST['isbn'],
 ":ti" => $_POST['pic'],
-":b"  => $_POST['bk'],
+":b"  => $_POST['book_id'],
 
 ];
 
 $stmt->execute($data);
 
-}
 
-}
+
+
 $success = "product edited";
 header("location:view_product.php?success=$success");
 

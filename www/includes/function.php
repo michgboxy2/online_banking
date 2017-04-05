@@ -176,9 +176,11 @@ $stmt->execute();
 			$bk_id = $row['book_id'];
 			$title = $row['title'];
 			$author = $row['author'];
+			$cat_id = $row['category_id'];
 			$price = $row['price'];
 			$year = $row['year_of_publication'];
 			$isbn = $row['isbn'];
+			$fpth = $row['filepath'];
 			/*$stmt = $dbconn->prepare("SELECT category_id FROM categories WHERE category_name= :cn");
 			$stmt->bindparam(":cn", $row['category_name']);
 			$stmt->execute();
@@ -194,8 +196,8 @@ $stmt->execute();
 					$result.= 	'<td>' .$row['year_of_publication']. '</td>';
 					$result.= 	'<td>' .$row['isbn']. '</td>';
 					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td>';
-					$result.=  '<td><a href="edit_product.php">edit</a></td>';
-					$result.= 	'<td><a href="delete_product.php?pid="'.$row['book_id'].'>delete</a></td></tr>';
+					$result.=  '<td><a href="edit_product.php?book_id='.$bk_id.'&title='.$title.'&author='.$author.'&category_id='.$cat_id.'&price='.$price.'&year_of_publication='.$year.'&isbn='.$isbn.'&filepath='.$fpth.'">edit</a></td>';
+					$result.= 	'<td><a href="delete_product.php?pid='.$bk_id.'">delete</a></td></tr>';
 
 		}
 
