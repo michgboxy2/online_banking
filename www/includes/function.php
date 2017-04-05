@@ -195,7 +195,7 @@ $stmt->execute();
 					$result.= 	'<td>' .$row['isbn']. '</td>';
 					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td>';
 					$result.=  '<td><a href="edit_product.php">edit</a></td>';
-					$result.= 	'<td><a href="delete_product.php">delete</a></td></tr>';
+					$result.= 	'<td><a href="delete_product.php?pid="'.$row['book_id'].'>delete</a></td></tr>';
 
 		}
 
