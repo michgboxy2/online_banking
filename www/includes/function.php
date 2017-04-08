@@ -236,19 +236,30 @@ $success = "product added";
 header("location:home.php?success=$success");
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	}
+
+
+function userRegister($dbconn, $post){
+
+	$stmt = $dbconn->prepare("INSERT INTO users VALUES(NULL, :f,:ln,:em,:us,:h");
+
+	$data = [
+
+	":f" => $post['fname'],
+	":ln" => $post['lname'],
+	":em" => $post['email'],
+	":us" => $post['username'],
+	":h" => $hash,
+];
+
+
+
+
+
+
+
+
+}
 
 
 	?>
