@@ -287,6 +287,8 @@ $stmt->execute($data);
 			if($cat_name == $katty) { continue; }
 
 			$result .= "<option value='$cat_id'>$cat_name</option>";
+
+			
 		}
 
 		return $result;

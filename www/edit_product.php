@@ -68,7 +68,7 @@ $page_title = "EDIT PRODUCT";
 
 		editproduct($conn, $clean, $_GET['book_id']);
 
-		redirect("edit_product.php");
+		
 
 	}
 	
