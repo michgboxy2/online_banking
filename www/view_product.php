@@ -2,7 +2,11 @@
 
 include 'includes/db.php';
 
+<<<<<<< HEAD
 include 'includes/bookhead.php';
+=======
+include 'includes/header.php';
+>>>>>>> add
 
 include 'includes/function.php';
 
@@ -41,6 +45,13 @@ $stmt->execute();
 
 ?>
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> add
 						
 					
           		</tbody>
@@ -55,6 +66,27 @@ $stmt->execute();
 		</div>
 	</div>
 
+<<<<<<< HEAD
 </table>
 
+=======
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+</table>
+
+
+
+>>>>>>> add
 </form>

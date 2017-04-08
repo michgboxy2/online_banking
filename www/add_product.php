@@ -6,6 +6,18 @@ include 'includes/bookhead.php';
 
 include 'includes/function.php';
 
+<<<<<<< HEAD
+=======
+/*$shuu = $conn->prepare("SELECT * FROM categories ");
+
+
+for($i=0; $row = $shuu->fetch(); $i++){?> 
+	
+	<?php }
+	$id = $row['category_id'];
+
+*/	
+>>>>>>> add
 
 ?>
 
@@ -22,6 +34,7 @@ if(array_key_exists('submit', $_POST)){
 	
 	if(empty($_FILES['pic']['name'])) {
 			$error[] = "please choose a file";
+<<<<<<< HEAD
 	}else{
 
 
@@ -41,6 +54,16 @@ if(array_key_exists('submit', $_POST)){
 	
 
 	
+=======
+	}
+
+	if(!in_array($_FILES['pic']['type'], $ext)){
+
+		$error['pic'] = "invalid file format";
+	}
+
+	
+>>>>>>> add
 if(empty($_POST['btitle'])){
 
 	$error['btitle'] = "please enter the book title";
@@ -74,6 +97,7 @@ if(empty($_POST['isbn'])){
 
 if(empty($error)){
 
+<<<<<<< HEAD
 
 	$upload = fileupload($_FILES, 'pic');
 
@@ -89,6 +113,18 @@ if(empty($error)){
 
 }
 
+=======
+	if(!move_uploaded_file($_FILES['pic']['tmp_name'], $destination)){
+
+		$error['pic'] = "file upload failed";
+	}
+
+$clean = array_map('trim', $_POST);
+
+addproduct($conn, $_FILES, $clean, 'pic', $error);
+
+} 
+>>>>>>> add
 foreach($error as $err){
 	echo "<p>".$err. "</p>";
 }
@@ -112,8 +148,12 @@ if(isset($_GET['success'])){
 		</section>
 	<div class="wrapper">
 
+<<<<<<< HEAD
 	
 </form>
+=======
+	</form>
+>>>>>>> add
 		<div id="stream">
 			<table id="tab">
 				<thead>
@@ -124,7 +164,11 @@ if(isset($_GET['success'])){
 						<th>Year of publication</th> 
 						<th>ISBN</th>
 					</tr>
+<<<<<<< HEAD
 								</tr>
+=======
+					</tr>
+>>>>>>> add
           		</tbody>
 			</table>
 		</div>
@@ -132,13 +176,22 @@ if(isset($_GET['success'])){
 
 
 <form id="file/add" action="add_product.php" method="post" enctype="multipart/form-data">
+<<<<<<< HEAD
+=======
+
+
+<?php if(isset($error['pic'])){ echo '<span class="err">'.$error['pic']. '</span>';  }?>
+>>>>>>> add
 <label>PLEASE SELECT FILE</label></br>
 <input type="file" name="pic"></br>
 </br>
 </br>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> add
 <?php displayErrors($error, 'btitle'); ?>
 <label>BOOK TITLE:</label>
 <input type="text" name="btitle" placeholder="book name"/></br>
@@ -148,6 +201,7 @@ if(isset($_GET['success'])){
 <input type="text" name="bauthor" placeholder="Author"/></br>
 </br>
 
+<<<<<<< HEAD
 <label>category</label>
 <select name="category">
 <option value="">select category</option>
@@ -158,6 +212,20 @@ if(isset($_GET['success'])){
 
 
 </select>
+=======
+<label>category ID</label>
+<select name="category">
+<option>select category</option>
+<?php  $stmt = $conn->prepare("SELECT * FROM categories");
+
+$stmt->execute(); 
+for($i=0; $row = $stmt->fetch(); $i++){
+
+?>
+<option value="<?php echo $row['category_id']; ?>">
+<?php echo $row['category_id'];?></option>
+<?php } ?></select>
+>>>>>>> add
 
 
 

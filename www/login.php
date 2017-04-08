@@ -36,21 +36,7 @@ include 'includes/header.php';
 
 		adminLogin($conn, $clean);
 
-		/*$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
-
-		#pull data
-
-		$stmt = $conn->prepare("SELECT * FROM admin WHERE email = :e AND hash = :h ");
-
-		#bind params
-
-		$data = [
-		':e' => $clean['email'],
-		':h' => $hash
-
-		];
-
-		$stmt->execute($data); */
+		
 
 	}
 

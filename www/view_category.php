@@ -8,6 +8,8 @@ include 'includes/function.php';
 
 	$stmt = $conn->prepare("SELECT category_id, category_name FROM categories");
 
+	
+
 	#bind params
 
 	$stmt->bindparam(":ca", $clean['category_name']);
@@ -25,31 +27,35 @@ include 'includes/function.php';
 				<thead>
 					<tr>
 						<th>category id</th>
-						<th>categoty name</th>
+						<th>category name</th>
 						
 					</tr>
+					<?php    
+
+
+	$show = viewcategory($conn);
+
+	echo $show;
+
+	?>
 				</thead>
 				<tbody>
-	<?php 
-	for ($i=0; $result = $stmt->fetch(); $i++) { 
-		# code...
 	
-
-	#while($result = $stmt->fetchall());{ ?>
-
-
 	
-					<tr>
-						<td><?php echo $result['category_id']; ?></td>
-						<td><?php echo $result['category_name']; ?></td>
 						
+<<<<<<< HEAD
 						<td><a href="editform.php?cam=<?php echo $result['category_name']; ?>">edit</a></td>
 						<td><a href="delete.php?cid=<?php echo $result['category_id']; ?>">delete</a></td>
+=======
+						<td><a href="editform.php">edit</a></td>
+						<td><a href="#">delete</a></td>
+>>>>>>> add
 					</tr>
 
-					<?php }?>
+					
           		</tbody>
-			</table>
+          		
+		</table>
 		</div>
 
 
@@ -97,4 +103,6 @@ include 'includes/function.php';
 
 
 	</form>
+
+
 
