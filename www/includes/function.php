@@ -316,6 +316,50 @@ $stmt->execute($data);
 
 	}
 
+
+	
+
+function userRegister($dbconn, $post){
+
+	$hash = password_hash($post['password'], PASSWORD_BCRYPT);
+
+	$stmt = $dbconn->prepare("INSERT INTO users VALUES(NULL, :f,:ln,:em,:us,:h)");
+
+	$data = [
+
+	":f" => $post['fname'],
+	":ln" => $post['lname'],
+	":em" => $post['email'],
+	":us" => $post['username'],
+	":h" => $hash, ];
+
+	$stmt->execute($data);
+
+}
+
+
+
+function doesUserEmailExist($dbconn, $email) {
+		$result = false;
+
+		$stmt = $dbconn->prepare("SELECT email FROM users WHERE email =:e");
+
+		# bind params
+
+		$stmt->bindparam(":e", $email);
+		$stmt->execute();
+
+		#get number of rows returned
+		$count = $stmt->rowCount();
+
+		if($count > 0) {
+			$result = true;
+		}
+
+		return $result;
+
+	}
+
 	?>
 
 	 
