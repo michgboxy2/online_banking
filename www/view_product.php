@@ -41,10 +41,6 @@ $stmt->execute();
 
 ?>
 
-
-
-
-
 						
 					
           		</tbody>
@@ -59,22 +55,6 @@ $stmt->execute();
 		</div>
 	</div>
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
 </table>
-
-
 
 </form>

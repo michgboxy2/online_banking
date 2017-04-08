@@ -35,6 +35,9 @@ $conn = new PDO('mysql:host=localhost;dbname='.DBNAME, DBUSER, DBPASS);
 		if(empty($_FILES['pic']['name'])) {
 			$errors[] = "please choose a file";
 		}
+
+		addproduct($conn, $_FILE, $clean, 'pic', $error);
+
 			/*
 		#check file size
 		if($_FILES['pic']['size'] > MAX_FILE_SIZE) {

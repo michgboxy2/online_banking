@@ -1,96 +1,165 @@
 <?php
 
-include 'includes/db.php';
+$page_title = "EDIT PRODUCT";
 
-include 'includes/cat_header.php';
+	# load db connection
 
-include 'includes/function.php';
+	include 'includes/db.php';
 
+	#load functions
 
-/*if(array_key_exists('submit', $_POST)){
+	include 'includes/function.php';
 
-$clean = array_map('trim', $_POST);
-
-$stmt = $conn->prepare("UPDATE book SET title=:ti,author=:au,category_id=:id,price=:pr,year_of_publication=:yr,isbn=:is,filepath=:ti WHERE book_id=:b");
-
-if(isset($_GET['bid'])){
-
-	$bid = $_GET['bid'];
-
-}
-
-
-$data = [
-
-":ti" => $clean['title'],
-":au" => $clean['author'],
-":id" => $clean['category_id'],
-":pr" => $clean['price'],
-":yr" => $clean['year'],
-":is" => $clean['isbn'],
-":ti" => $clean['pic'],
-":b"  => $bid,
-
-];
-
-$stmt->execute($data);
-
-
-
-
-}
-
-*/
-
-
-if(isset($_GET['book_id'])){
-
-	$bid = $_GET['book_id'];
-
-}
-
-$stmt = $conn->prepare("SELECT * FROM book WHERE book_id=:bi");
-$stmt->bindparam(":bi", $bid);
-
-$stmt->execute();
-
-for($i=0; $row= $stmt->fetch(); $i++){
-	$title = $row['title'];
-	$author = $row['author'];
-
-
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Edit product</title>
-</head>
-<body>
-
-<form id="edit" action="editp.php" method="post">
-
-<input type="text" name="title" placeholder="book title" value="<?php echo $title; ?>">
-<input type="text" name="author" placeholder="Author" value="<?php echo $row['author']; ?>">
-<input type="SELECT" name="category_id" placeholder="category_id" value="<?php echo $row['category_id'];  ?>">
-<input type="text" name="price" placeholder="price" value="<?php echo $row['price'];  ?>">
-<input type="text" name="year" placeholder="year" value="<?php echo $row['year_of_publication']; ?>">
-<input type="text" name="isbn" placeholder="isbn" value="<?php echo $row['isbn']; ?>">
-<input type="file" name="pic" value="<?php echo $row['filepath']; ?> ">
-<input type="hidden" name="book_id" value="<?php echo $row['book_id']; ?>"> 
-<input type="submit" name="submit" value="EDIT">
-
-
-
+	#include header
 	
-<?php } ?>
+	include 'includes/header.php';
+
+	$ext = ["image/jpg", "image/jpeg", "image/png"];
+		$errors = [];
+
+
+	if(isset($_GET['book_id'])){
+		$bid = bookloop($conn,$_GET['book_id']);
+		
+		}
+
+		$category = selectcategorybyid($conn, $bid['category_id']);
 
 
 
-</form>
-
-</body>
-</html>
 
 
-<?php include 'includes/footer2.php'; ?>
+
+
+		$errors= [];
+
+	if(array_key_exists('submit',$_POST)){
+
+		
+
+	if(empty($_POST['pic'])){
+		$errors['pic']="Select a file";
+	}
+	if(empty($_POST['btitle'])){
+		$errors['btitle']= "enter book title";
+	}
+	
+	if(empty($_POST['bauthor'])){
+		$errors['bauthor'] = "enter author name";
+	}
+
+	if(empty($_POST['bprice'])){
+
+		$errors['bprice'] = "enter price";
+	}
+
+	if(empty($_POST['year'])){
+		$errors['year']=  "enter year";
+	}
+
+	if(empty($_POST['isbn'])){
+		$errors['isbn'] = "enter isbn image";
+
+	}
+
+	if(empty($error)){
+
+		$clean = array_map('trim', $_POST);
+
+		editproduct($conn, $clean, $_GET['book_id']);
+
+		redirect("edit_product.php");
+
+	}
+	
+
+
+	}
+
+
+
+		
+
+?>		
+
+
+
+
+
+<div class="wrapper">
+		<h3 id="register-label">EDIT BOOKS</h3>
+		<hr>
+		<form id="register" method="post" action="<?php echo "edit_product.php?book_id=".$_GET['book_id'];  ?>">
+			<div> 
+
+				
+				<input type="file" name="pic" value="<?php echo $row['filepath'];  ?>">
+			</div></br>
+			
+			<div>
+				<label>Book Title:</label>	
+				<input type="text" name="btitle" placeholder="title" value="<?php echo $bid['title']; ?>">
+			</div></br>
+
+			<div>
+				
+				<input type="hidden" name="book_id" placeholder="book_id" value="<?php echo $bid['book_id']; ?>">
+			</div></br>
+
+
+			<div>
+				<label>Author:</label>
+				<input type="text" name="bauthor" placeholder="author" value="<?php echo $bid['author'];?>">
+			</div></br>
+			
+			<div>				
+			<label>Category ID:</label>
+				
+				<select name="cat_id">
+					
+					<option>categories</option>
+										
+					
+					<option value="<?php $category['category_id'];?>"><?php echo $category['category_id']; ?></option>
+
+					<?php 
+							$catlist = editgetcategory($conn, $category['category_name']);
+
+							echo $catlist;
+
+							?>
+
+										
+																							
+					 </select>
+
+				
+			</div></br>
+ 
+			<div>
+				<label>Price:</label>	
+				<input type="text" name="bprice" placeholder="Price" value="<?php echo $bid['price'] ;?>">
+			</div></br>
+
+			<div>
+				<label>Year Of Publication:</label>	
+				<input type="text" name="year" placeholder="year of publication" value="<?php echo $bid['year_of_publication'] ;?>">
+			</div></br>
+
+			<div>
+				<label>ISBN:</label>	
+				<input type="text" name="isbn" placeholder="isbn" value="<?php echo $bid['isbn'];?>">
+			</div></br>
+
+
+
+			<input type="submit" name="submit" value="Edit Book">
+			
+			</form>
+			
+
+			<?php
+
+			include 'includes/footer.php';
+
+	?>

@@ -22,12 +22,23 @@ if(array_key_exists('submit', $_POST)){
 	
 	if(empty($_FILES['pic']['name'])) {
 			$error[] = "please choose a file";
+	}else{
+
+
+		if($_FILES['pic']['size'] > MAX_FILE_SIZE){
+
+			$error['pic'] = "file size exceeds maximum. maximum:".MAX_FILE_SIZE;
+		}
+
+		if(!in_array($_FILES['pic']['type'], $ext)){
+
+			$error['pic'] = "invalid file format";
+		}
+
+
 	}
 
-	if(!in_array($_FILES['pic']['type'], $ext)){
-
-		$error['pic'] = "invalid file format";
-	}
+	
 
 	
 if(empty($_POST['btitle'])){
@@ -63,9 +74,18 @@ if(empty($_POST['isbn'])){
 
 if(empty($error)){
 
-$clean = array_map('trim', $_POST);
 
-addproduct($conn, $_FILE, $clean, 'pic', $error);
+	$upload = fileupload($_FILES, 'pic');
+
+
+	if($upload[0]) {
+
+		addproduct($conn, $upload[1]);
+		header('Location: view_product.php');
+	}
+
+	$error['pic'] = 'File Upload failed. Please Try again!';
+
 
 }
 
@@ -128,18 +148,16 @@ if(isset($_GET['success'])){
 <input type="text" name="bauthor" placeholder="Author"/></br>
 </br>
 
-<label>category ID</label>
+<label>category</label>
 <select name="category">
-<option>select category</option>
-<?php  $stmt = $conn->prepare("SELECT * FROM categories");
+<option value="">select category</option>
+<?php $view = getcategory($conn); echo $view ?>
 
-$stmt->execute(); 
-for($i=0; $row = $stmt->fetch(); $i++){
 
-?>
-<option value="<?php echo $row['category_id']; ?>">
-<?php echo $row['category_id'];?></option>
-<?php } ?></select>
+
+
+
+</select>
 
 
 
