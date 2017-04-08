@@ -197,7 +197,7 @@ $stmt->execute();
 	function addproduct($dbconn, $destin){
 
 	
-$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fi)");
+$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fl, :fi)");
 
 $clean = array_map('trim', $_POST);
 
@@ -210,7 +210,9 @@ $data = [
 ":bpr" => $clean['bprice'],
 ":yr" => $clean['year'],
 ":is" => $clean['isbn'],
+":fl" => $clean['flag'],
 ":fi" => $destin,
+
 ];
 
 $stmt->execute($data);
@@ -374,11 +376,18 @@ function doesUserEmailExist($dbconn, $email) {
 
 		$stmt->execute();
 
+			}
+	function SelectFlag(){
+
+
+
+
 
 
 
 
 	}
+
 
 	?>
 
