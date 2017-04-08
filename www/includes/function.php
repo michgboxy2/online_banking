@@ -140,7 +140,9 @@ $stmt->execute();
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 		$result .= '<tr><td>'.$row['category_id'].'</td>';
-		$result .= '<td>'.$row['category_name'].'</td></tr>';
+		$result .= '<td>'.$row['category_name'].'</td>';
+
+
 
 
 }
@@ -317,7 +319,7 @@ $stmt->execute($data);
 	}
 
 
-	
+
 
 function userRegister($dbconn, $post){
 
@@ -357,6 +359,24 @@ function doesUserEmailExist($dbconn, $email) {
 		}
 
 		return $result;
+
+	}
+
+	function UserLogin($dbconn, $clean){
+
+		$stmt = $dbconn->prepare("SELECT * FROM users WHERE email=:em AND hash=:h");
+
+		$data = [
+
+		":em" => $clean['email'],
+		":h" => $clean['password'],
+		];
+
+		$stmt->execute();
+
+
+
+
 
 	}
 

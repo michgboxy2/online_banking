@@ -60,25 +60,6 @@
 			#register admin
 
 			doAdminRegister($conn, $clean);
-
-			#hash the password
-
-			/*$hash = password_hash($clean['password'], PASSWORD_BCRYPT);
-
-			#insert data
-
-			$stmt = $conn->prepare("INSERT INTO admin(firstname, lastname, email, hash) VALUES(:fn, :ln, :e, :h)");
-
-			#bind params...
-			$data = [
-				':fn' => $clean['fname'],
-				':ln' => $clean['lname'],
-				':e' => $clean['email'],
-				':h' => $hash
-
-				];
-
-				$stmt->execute($data); */
 		
 			
 			

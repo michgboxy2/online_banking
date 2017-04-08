@@ -125,6 +125,16 @@
 		</br>
 
 		<input type="submit" name="submit" value="signup"></br>
+
+		<h4 class="jumpto">Don't have an account? <a href="user_login.php">SIGN IN</a></h4>
+	</div>
+
+	<?php
+
+	include 'includes/footer.php';
+
+	?>
+
 			
 
 
