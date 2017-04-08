@@ -197,7 +197,7 @@ $stmt->execute();
 	function addproduct($dbconn, $destin){
 
 	
-$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fl, :fi)");
+$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is,:fi, :flag)");
 
 $clean = array_map('trim', $_POST);
 
@@ -210,9 +210,8 @@ $data = [
 ":bpr" => $clean['bprice'],
 ":yr" => $clean['year'],
 ":is" => $clean['isbn'],
-":fl" => $clean['flag'],
 ":fi" => $destin,
-
+":flag" => $clean['flag'],
 ];
 
 $stmt->execute($data);
