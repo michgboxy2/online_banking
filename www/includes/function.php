@@ -57,37 +57,23 @@
 }
 
 
-	function fileupload($in, $amp, $tom){
+	function fileupload($fileArray,$imageName){
 
-		define("MAX_FILE_SIZE", "2097152");
-
-
-		$ext = ["image/jpg", "image/jpeg", "image/png"];
-
-				
-						#check file size
-		if($in[$tom]['size'] > MAX_FILE_SIZE) {
-			$amp[$tom] = "file size exceeds maximum. maximum: ". MAX_FILE_SIZE;
-		}
-
-		/*if(!in_array($in[$tom]['type'], $ext)){
-			$amp[$tom] = "invalid file type";
-		}*/
 
 		#generate random number to append
 		$rnd = rand(0000000000, 9999999999);
 
 		# strip filename for spaces
-		$strip_name = str_replace(" ", "_", $in[$tom]['name']);
+		$strip_name = str_replace(" ", "_", $fileArray[$imageName]['name']);
 
 		$filename = $rnd.$strip_name;
 		$destination = 'uploads/'.$filename;
 
-		if(!move_uploaded_file($in[$tom]['tmp_name'], $destination)) {
+		if(!move_uploaded_file($fileArray[$imageName]['tmp_name'], $destination)) {
 			
-			$amp[$tom] = "file upload failed";
+			return [false,$destination];
 		}
-
+			return [true, $destination];
 		}
 
 		function adminLogin($dbconn, $enter){
@@ -110,7 +96,7 @@
 
 				$_SESSION['id'] = $row['admin_id'];
 				$_SESSION['email'] = $row['email'];
-				header("Location:home.php");
+				header("Location:view_product.php.php");
 			
 			} else {
 				$login_error = "wrong email or password";
@@ -173,6 +159,19 @@ $stmt->execute();
 
 		while($row = $stmt->fetch()){
 
+			$bk_id = $row['book_id'];
+			$title = $row['title'];
+			$author = $row['author'];
+			$cat_id = $row['category_id'];
+			$price = $row['price'];
+			$year = $row['year_of_publication'];
+			$isbn = $row['isbn'];
+			$fpth = $row['filepath'];
+			/*$stmt = $dbconn->prepare("SELECT category_id FROM categories WHERE category_name= :cn");
+			$stmt->bindparam(":cn", $row['category_name']);
+			$stmt->execute();
+			$row2 = $stmt->fetch();*/
+
 
 									
 					$result.= '<tr><td>' .$row['book_id']. '</td>';
@@ -183,8 +182,8 @@ $stmt->execute();
 					$result.= 	'<td>' .$row['year_of_publication']. '</td>';
 					$result.= 	'<td>' .$row['isbn']. '</td>';
 					$result.= 	'<td><img src="'.$row['filepath'].'" height="60" width="60"></td>';
-					$result.=  '<td><a href="edit_product.php">edit</a></td>';
-					$result.= 	'<td><a href="#">delete</a></td></tr>';
+					$result.=  '<td><a href="edit_product.php?book_id='.$bk_id.'">edit</a></td>';
+					$result.= 	'<td><a href="delete_product.php?pid='.$bk_id.'">delete</a></td></tr>';
 
 		}
 
@@ -193,51 +192,132 @@ $stmt->execute();
 
 }
 
-	function addproduct($dbconn, $fibu, $kiki, $pie, $in){
-
-		define("MAX_FILE_SIZE", "2097152"); 
-
-$ext = ["image/jpeg", "image/jpg", "image/png"];
+	function addproduct($dbconn, $destin){
 
 	
-	if($fibu[$pie]['size'] > MAX_FILE_SIZE){
+$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fi)");
 
-		$in[$pie] = "FILE TOO LARGE".MAX_FILE_SIZE;
-	}
+$clean = array_map('trim', $_POST);
 
-	$rnd = rand(0000000000,9999999999);
-	$strip_name = str_replace("_", "", $fibu[$pie]['name']);
-	$filename = $rnd.$strip_name;
-	$destination = "uploads/".$filename;
-
-	if(!move_uploaded_file($fibu[$pie]['tmp_name'], $destination)){
-
-		$in[$pie] = "file upload failed";
-	}
-
-
-
-
-	$stmt = $dbconn->prepare("INSERT INTO book VALUES(NULL,:bt, :au, :id, :bpr, :yr, :is, :fi)");
 #bind param
 $data = [
 
-":bt" => $kiki['btitle'],
-":au" => $kiki['bauthor'],
-":id" => $kiki['category'],
-":bpr" => $kiki['bprice'],
-":yr" => $kiki['year'],
-":is" => $kiki['isbn'],
-":fi" => $destination,
+":bt" => $clean['btitle'],
+":au" => $clean['bauthor'],
+":id" => $clean['category'],
+":bpr" => $clean['bprice'],
+":yr" => $clean['year'],
+":is" => $clean['isbn'],
+":fi" => $destin,
 ];
 
 $stmt->execute($data);
-$success = "product added";
-header("location:home.php?success=$success");
+
+
+}
+
+	function editproduct($dbconn,$tino){
+
+	$stmt = $dbconn->prepare("UPDATE book SET title=:ti,author=:au,category_id=:id,price=:pr,year_of_publication=:yr, isbn=:is WHERE book_id=:b");
+
+	
+
+		$data = [
+
+		":ti" => $tino['btitle'],
+		":au" => $tino['bauthor'],
+		":id" => $tino['cat_id'],
+		":pr" => $tino['bprice'],
+		":yr" => $tino['year'],
+		":is" => $tino['isbn'],
+		#":ti" => $destination,
+		":b"  => $tino['book_id'],
+
+		];
+		
+		$stmt->execute($data);
+
+
+}
+	function bookloop($dbconn,$getbookbyid){
+
+		$stmt = $dbconn->prepare("SELECT * FROM book WHERE book_id=:b");
+
+		$stmt->bindparam(":b", $getbookbyid);
+
+		$stmt->execute();
+
+
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		return $row;		
+}
+
+
+
+	function getcategory($dbconn){
+
+		$stmt = $dbconn->prepare("SELECT * FROM categories");
+
+		$stmt->execute();
+		$result = "";
+
+		while($record = $stmt->fetch()){
+			$cat_id = $record['category_id'];
+			$cat_name = $record['category_name'];
+
+			$result .= "<option value='$cat_id'>$cat_name</option>";
+		}
+
+		return $result;
+
+	}
+
+	function editgetcategory($dbconn, $katty){
+
+		$stmt = $dbconn->prepare("SELECT * FROM categories");
+
+		$stmt->execute();
+		$result = "";
+
+		while($record = $stmt->fetch()){
+			$cat_id = $record['category_id'];
+			$cat_name = $record['category_name'];
+			
+			if($cat_name == $katty) { continue; }
+
+			$result .= "<option value='$cat_id'>$cat_name</option>";
+
+			
+		}
+
+		return $result;
 
 
 	}
 
+	function selectcategorybyid($dbconn, $catID){
+
+	$stmt = $dbconn->prepare("SELECT * FROM categories WHERE category_id = :cat_id");
+
+	$stmt->bindParam(":cat_id", $catID);
+
+	$stmt->execute();
+
+	$row = $stmt->fetch(PDO::FETCH_ASSOC);
+	return $row;
+
+	}
+
+	function redirect($loc){
+
+		header("Location: $loc");
+
+
+	}
+
+
+	
 
 function userRegister($dbconn, $post){
 
@@ -280,7 +360,8 @@ function doesUserEmailExist($dbconn, $email) {
 
 	}
 
-
 	?>
 
-	
+	 
+
+
