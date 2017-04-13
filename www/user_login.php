@@ -31,23 +31,7 @@ $page_title = "login USERs";
 			$clean = array_map('trim', $_POST);
 			UserLogin($conn,$clean);
 
-			$success = "login successful";
-
-			redirect('userhome.php');
-		} 
-
-
-
-
-
-
-
-
-
-
-
-
-
+				} 
 
 		}
 
@@ -62,15 +46,18 @@ $page_title = "login USERs";
 		<h1 id="register-label">user Login</h1>
 		<hr>
 		<form id="register"  action ="user_login.php" method ="POST">
-			<div><?php #if(isset($error['email'])){echo '<span class="err">'.$error['email']. '</span>';}
+			<div>
+
+					<?php 
 					$display = displayErrors($error,'email');
 
 					echo $display;
-			  ?>
+			  		?>
+			  		
 				<label>email:</label>
 				<input type="text" name="email" placeholder="email">
 			</div>
-			<div><?php #if(isset($error['password'])){echo '<span class="err">'.$error['password']. '</span>';} 
+			<div><?php 
 					$display = displayErrors($error,'password');
 
 					echo $display;

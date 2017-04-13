@@ -2,7 +2,7 @@
 
 include 'includes/db.php';
 
-include 'includes/cat_header.php';
+include 'includes/header.php';
 
 include 'includes/function.php';
 

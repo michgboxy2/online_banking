@@ -96,7 +96,7 @@
 
 				$_SESSION['id'] = $row['admin_id'];
 				$_SESSION['email'] = $row['email'];
-				header("Location:view_product.php.php");
+				header("Location:view_product.php");
 			
 			} else {
 				$login_error = "wrong email or password";
@@ -365,28 +365,57 @@ function doesUserEmailExist($dbconn, $email) {
 
 	function UserLogin($dbconn, $clean){
 
-		$stmt = $dbconn->prepare("SELECT * FROM users WHERE email=:em AND hash=:h");
+		$stmt = $dbconn->prepare("SELECT * FROM users WHERE email=:em");
+		
+				#bind params
+				$stmt->bindParam(":em", $clean['email']);
+				
+				$stmt->execute();
 
-		$data = [
+		$count = $stmt->rowCount();
+		#print_r($count); exit();
 
-		":em" => $clean['email'],
-		":h" => $clean['password'],
-		];
+		if($count == 1) {
+			
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			$_SESSION['id'] = $row['user_id'];
 
-		$stmt->execute();
+			$_SESSION['name'] = $row['username'];
 
+			#print_r($row); exit();
+			
+			if(password_verify($clean['password'], $row['hash'])){
+
+				header("Location:userhome.php");
+				}
+			
+			} else {
+				$login_error = "wrong email or password";
+				header("Location:user_login.php?login_error=$login_error");
 			}
-	function SelectFlag(){
-
-
-
-
-
-
-
-
+		
+		
+		
 	}
 
+		function displayTopBookImage($dbconn, $dir){
+
+			$result = "";
+
+			$stmt = $dbconn->prepare("SELECT * FROM book WHERE filepath=:f");
+
+			$stmt->bindparam(":f", $dir);
+
+			$stmt->execute();
+
+			$result .= '<div class="display-book" style="background: url('.$dir.'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>;
+
+			return $result;   '
+
+		}
+
+	
+	
 
 	?>
 
