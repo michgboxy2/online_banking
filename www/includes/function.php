@@ -408,11 +408,69 @@ function doesUserEmailExist($dbconn, $email) {
 
 			$stmt->execute();
 
-			$result .= '<div class="display-book" style="background: url('.$dir.'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>;
+			$result .= '<div class="display-book" style="background: url('.$dir.'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>';
 
-			return $result;   '
+			return $result; 
 
 		}
+
+		function displayTopSelling($dbconn, $dir){
+
+			$result = "";
+
+			$stmt = $dbconn->prepare("SELECT * FROM book WHERE filepath=:f");
+
+			$stmt->bindparam(":f", $dir);
+
+			$stmt->execute();
+
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+					$title = $row['title'];
+					$author = $row['author'];
+					$price = '$'.$row['price'];
+
+					$result .= '<h2 class="book-title">'.$title.'</h2>'.'<h3 class="book-author">'.$author.'</h3>'.'<h3 class="book-price">'.$price.'</h3>';
+
+			}
+
+				return $result;
+
+		}
+
+
+			function trendingBooks($dbconn){
+
+				$result = "";
+
+				$stmt = $dbconn->prepare("SELECT * FROM book WHERE flag='trending'");
+
+				$stmt->execute();
+
+				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+					$book_id = $row['book_id'];
+					$filepath = $row['filepath'];
+					$price = $row['price'];
+					$author = $row['author'];
+					$title = $row['title'];
+
+				$result .= '<li class="book">
+          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="200" width="100"></div></a>
+          <div class="book-price"><p>'.$price.'</p></div>
+        </li>';
+
+
+				}
+
+				return $result;
+
+
+
+			}
+
+
+
 
 	
 	

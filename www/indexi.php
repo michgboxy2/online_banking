@@ -76,23 +76,32 @@ include 'includes/function.php';
     <div class="trending-books horizontal-book-list">
       <h3 class="header">Trending</h3>
       <ul class="book-list">
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$125</p></div>
-        </li>
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$90</p></div>
-        </li>
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$250</p></div>
-        </li>
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$50</p></div>
-        </li>
-      </ul>
+
+      <?php
+
+          $trending = trendingBooks($conn);
+
+          echo $trending;
+
+
+      ?>
+        <!-- <li class="book"> -->
+          <!-- <a href="#"><div class="book-cover"></div></a> -->
+          <!-- <div class="book-price"><p>$125</p></div> -->
+        <!-- </li> -->
+        <!-- <li class="book"> -->
+          <!-- <a href="#"><div class="book-cover"></div></a> -->
+          <!-- <div class="book-price"><p>$90</p></div> -->
+        <!-- </li> -->
+        <!-- <li class="book"> -->
+          <!-- <a href="#"><div class="book-cover"></div></a> -->
+          <!-- <div class="book-price"><p>$250</p></div> -->
+        <!-- </li> -->
+        <!-- <li class="book"> -->
+          <!-- <a href="#"><div class="book-cover"></div></a> -->
+          <!-- <div class="book-price"><p>$50</p></div> -->
+        <!-- </li> -->
+      <!-- </ul> -->
     </div>
     <div class="recently-viewed-books horizontal-book-list">
       <h3 class="header">Recently Viewed</h3>
