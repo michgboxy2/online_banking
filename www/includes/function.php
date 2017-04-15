@@ -464,6 +464,33 @@ function doesUserEmailExist($dbconn, $email) {
 				}
 
 				return $result;
+			}
+
+
+			function mostViewed($dbconn){
+
+				$result = "";
+
+				$stmt = $dbconn->prepare("SELECT * FROM book WHERE flag='most viewed'");
+
+				$stmt->execute();
+
+				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+					$book_id = $row['book_id'];
+					$price = $row['price'];
+				$filepath = $row['filepath'];
+
+					$result .=  '<li class="book">
+          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="200" width="150"></div></a>
+          <div class="book-price"><p>'.$price.'</p></div>
+        </li>';
+				}
+
+				return $result;
+
+
+
 
 
 
@@ -476,6 +503,8 @@ function doesUserEmailExist($dbconn, $email) {
 	
 
 	?>
+
+
 
 	 
 
