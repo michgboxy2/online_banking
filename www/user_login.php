@@ -29,7 +29,15 @@ $page_title = "login USERs";
 		if(empty($error)){
 
 			$clean = array_map('trim', $_POST);
-			UserLogin($conn,$clean);
+			$check = UserLogin($conn,$clean);
+
+			if($check > 0);
+
+
+
+
+
+			
 
 				} 
 

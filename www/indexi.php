@@ -3,9 +3,7 @@
 include 'includes/db.php';
 include 'includes/function.php';
 
-?>
-
-
+?> 
 
 
 <!DOCTYPE html>
@@ -101,10 +99,10 @@ include 'includes/function.php';
           <!-- <a href="#"><div class="book-cover"></div></a> -->
           <!-- <div class="book-price"><p>$50</p></div> -->
         <!-- </li> -->
-      <!-- </ul> -->
+      </ul>
     </div>
     <div class="recently-viewed-books horizontal-book-list">
-      <h3 class="header">Recently Viewed</h3>
+      <h3 class="header">Most Viewed</h3>
       <ul class="book-list">
         <div class="scroll-back"></div>
         <div class="scroll-front"></div>

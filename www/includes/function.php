@@ -269,7 +269,7 @@ $stmt->execute($data);
 			$cat_id = $record['category_id'];
 			$cat_name = $record['category_name'];
 
-			$result .= "<option value='$cat_id'>$cat_name</option>";
+			$result .= "<option value='".$cat_id."'>".$cat_name."</option>";
 		}
 
 		return $result;
@@ -289,7 +289,7 @@ $stmt->execute($data);
 			
 			if($cat_name == $katty) { continue; }
 
-			$result .= "<option value='$cat_id'>$cat_name</option>";
+			$result .= "<option value='$cat_id'>".$cat_name."</option>";
 
 			
 		}
@@ -365,6 +365,8 @@ function doesUserEmailExist($dbconn, $email) {
 
 	function UserLogin($dbconn, $clean){
 
+		$result = [];
+
 		$stmt = $dbconn->prepare("SELECT * FROM users WHERE email=:em");
 		
 				#bind params
@@ -375,25 +377,17 @@ function doesUserEmailExist($dbconn, $email) {
 		$count = $stmt->rowCount();
 		#print_r($count); exit();
 
-		if($count == 1) {
-			
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
-			$_SESSION['id'] = $row['user_id'];
+		$row = $stmt->fetch();
 
-			$_SESSION['name'] = $row['username'];
+		if($count !== 1 || !password_verify($clean['password'], $row['hash'])) {
 
-			#print_r($row); exit();
-			
-			if(password_verify($clean['password'], $row['hash'])){
+			$result =  false;
+		} else {
 
-				header("Location:userhome.php");
-				}
+			$result = true;
+		}
 			
-			} else {
-				$login_error = "wrong email or password";
-				header("Location:user_login.php?login_error=$login_error");
-			}
-		
+			return $result;
 		
 		
 	}
@@ -486,6 +480,85 @@ function doesUserEmailExist($dbconn, $email) {
           <div class="book-price"><p>'.$price.'</p></div>
         </li>';
 				}
+
+				return $result;
+			}
+
+
+			function catalogue($dbconn){
+
+				$result = "";
+
+				$stmt = $dbconn->prepare("SELECT * FROM categories");
+
+				#$stmt->bindparam(":c", $getbookwithcat_id);
+
+				$stmt->execute();
+
+				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+					$cat_id = $row['category_id'];
+					$cat_name = $row['category_name'];
+					
+
+					$result .=  '<ul class="category-list">
+        <a href="catalogue.php?cat_id='.$cat_id.'"><li class="category">'.$cat_name.'</li></a>';
+
+
+				}
+
+				return $result;
+
+			}
+
+			function catalogueBooks($dbconn, $id){
+
+				$result = "";
+
+				$stmt = $dbconn->prepare("SELECT * FROM book WHERE category_id=:c");
+				$stmt->bindParam(":c", $id);
+				$stmt->execute();
+
+				while($row = $stmt->fetch()){
+
+					$cat_id = $row['category_id'];
+					$book_id = $row['book_id'];
+					$filepath = $row['filepath'];
+					$flag = $row['flag'];
+					$price = $row['price'];
+
+				$result .=	'<li class="book">
+          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="180" width="150"></div></a>
+          <div class="book-price"><p>'.$price.'</p></div>
+        </li>';
+				
+				}
+			return $result;	
+
+			}
+
+			function Bookreview($dbconn){
+
+				$result = "";
+
+				$stmt = $dbconn->prepare("SELECT * FROM books WHERE book_id=:bid");
+				$stmt->bindparam(":bid", $book_id);
+				$stmt->execute();
+
+				while($row = $stmt->fetch()){
+
+					$book_id = $row['book_id'];
+					$price = $row['price'];
+					$title = $row['title'];
+					$author = $row['author'];
+
+					$result .= '  <div class="info">
+        <h2 class="book-title">'.$title.' </h2>
+        <h3 class="book-author">'.$author.'</h3>
+        <h3 class="book-price">'.$price.'</h3>';
+
+				}
+
 
 				return $result;
 
