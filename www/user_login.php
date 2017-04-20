@@ -15,15 +15,17 @@ $page_title = "login USERs";
 
 		if(array_key_exists('submit', $_POST)){
 
-			if(empty($_POST['email'])){
+			
+				if(empty($_POST['email'])){
 
-				$error['email'] = "please enter your email";
-			}
+				 $error['email'] = "please enter your email";
+					
+					}
 
-			if(empty($_POST['password'])){
+				if(empty($_POST['password'])){
 
 				$error['password'] = "please enter passwod";
-			}
+					}
 
 
 		if(empty($error)){
@@ -31,13 +33,21 @@ $page_title = "login USERs";
 			$clean = array_map('trim', $_POST);
 			$check = UserLogin($conn,$clean);
 
-			if($check > 0);
 
+			if($check){
 
+				print_r($check); exit();
 
+				$_SESSION['id'] = $row['user_id'];
 
+				$_SESSION['email'] = $row['email'];
 
+				redirect("indexi.php");
 			
+					} else {
+
+				redirect("user_login.php?msg=INVALID USERNAME AND PASSWORD");
+			}
 
 				} 
 
