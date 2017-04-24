@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="style/styles.css">
-    <title>$title</title>
+    <title><?php echo $title ?></title>
 </head>
 <body id="login">
   <!-- DO NOT TAMPER WITH CLASS NAMES! -->
