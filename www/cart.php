@@ -1,4 +1,8 @@
 <?php
+$title = 'cart';
+
+  include 'includes/function.php';
+  include 'includes/db.php;'
 
   include 'includes/new_header.php';
 

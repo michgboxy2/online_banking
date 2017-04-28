@@ -1,13 +1,16 @@
 <?php
 
+$title = 'catalogue';
+
 include 'includes/db.php';
 include 'includes/function.php';
 include 'includes/new_header.php';
 ?>
+
   <!-- side bar starts here -->
   <div class="side-bar">
     <div class="categories">
-      <h3 class="header">Categories</h3>
+      <h3 class="header">CATALOGUES</h3>
       <ul class="category-list">
 
       <?php $catalogue = catalogue($conn);
@@ -16,7 +19,7 @@ include 'includes/new_header.php';
 
          ?>
 
-      </ul>
+             </ul>
     </div>
   </div>
   <!-- main content starts here -->
@@ -31,9 +34,7 @@ include 'includes/new_header.php';
         echo $ca;
 
          ?>
-      
-
-       </ul>
+              </ul>
       <div class="actions">
         <button class="def-button previous">Previous</button>
         <button class="def-button next">Next</button>
@@ -58,17 +59,7 @@ include 'includes/new_header.php';
           <!-- <a href="#"><div class="book-cover"></div></a> -->
           <!-- <div class="book-price"><p>$250</p></div> -->
         <!-- </li> -->
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$50</p></div>
-        </li>
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$125</p></div>
-        </li>
-        <li class="book">
-          <a href="#"><div class="book-cover"></div></a>
-          <div class="book-price"><p>$90</p></div>
+        
         </li>
       </ul>
     </div>

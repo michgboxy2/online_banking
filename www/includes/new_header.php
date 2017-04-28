@@ -18,7 +18,7 @@ index
         <li class="top-nav-listItem Home"><a href="indexi.php">Home</a></li>
         <li class="top-nav-listItem catalogue"><a href="catalogue.php">Catalogue</a></li>
         <li class="top-nav-listItem login"><a href="user_login.php">Login</a></li>
-        <li class="top-nav-listItem register"><a href="add_users.php">Register</a></li>
+        <li class="top-nav-listItem register"><a href="add_user.php">Register</a></li>
         <li class="top-nav-listItem cart">
           <div class="cart-item-indicator">
             <p>12</p>

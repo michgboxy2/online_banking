@@ -258,7 +258,7 @@ $stmt->execute($data);
 
 
 
-	function getcategory($dbconn){
+	/*function getcategory($dbconn){
 
 		$stmt = $dbconn->prepare("SELECT * FROM categories");
 
@@ -274,7 +274,7 @@ $stmt->execute($data);
 
 		return $result;
 
-	}
+	}*/
 
 	function editgetcategory($dbconn, $katty){
 
@@ -363,36 +363,29 @@ function doesUserEmailExist($dbconn, $email) {
 
 	}
 
-	function UserLogin($dbconn, $input)		
-
-		{
+	function UserLogin($dbconn, $input){
 			$result = [];
 
-			$stmt = $conn->prepare("SELECT * FROM users WHERE email=:em");
+		$stmt = $dbconn->prepare("SELECT user_id, hash FROM users WHERE email=:e");
+		$stmt->bindParam(":e",$input['email']);
+		$stmt->execute();
 
-			$stmt->bindParam(":email", $input['email']);
-			$stmt->execute();
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$row = $stmt->fetch(PDO::FETCH_BOTH);
 
-			$count = $stmt->rowCount();
-			if($count !== 1 || !password_verify($input['pword'], $row['hash']))
+		
+		
+		if(($stmt->rowCount() != 1) || !password_verify($input['password'], $row['hash'])) {
+			//echo "i got here"; exit();
+			#return $result = false;
+			redirect("user_login.php"); exit();
+		
+			}else{
+			return $result[] = true;
+			return $result[] = $row['user_id'];
+		}
 
-					{
-
-						$result = false;
-					} else {
-						$esult = true;
-						$result = $row;
-					}
-
-			return $result;
-
-
-
-
-
-
-
+		return $result;
+			
 		}
 
 		function displayTopBookImage($dbconn, $dir){
@@ -453,7 +446,7 @@ function doesUserEmailExist($dbconn, $email) {
 					$title = $row['title'];
 
 				$result .= '<li class="book">
-          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="200" width="100"></div></a>
+          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="200" width="150"></div></a>
           <div class="book-price"><p>'.$price.'</p></div>
         </li>';
 
@@ -532,7 +525,7 @@ function doesUserEmailExist($dbconn, $email) {
 					$price = $row['price'];
 
 				$result .=	'<li class="book">
-          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="180" width="150"></div></a>
+          <a href="bookpreview.php?book_id='.$book_id.'"><div class="book-cover"><img src="'.$filepath.'" height="200" width="150"></div></a>
           <div class="book-price"><p>'.$price.'</p></div>
         </li>';
 				
@@ -551,10 +544,10 @@ function doesUserEmailExist($dbconn, $email) {
 
 				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-					$book_id = $row['book_id'];
-					$filepath = $row['filepath'];
+				$book_id = $row['book_id'];
+				$filepath = $row['filepath'];
 
-					$result .= '<div class="display-book" style="background: url('.$filepath.'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>';
+				$result .= '<div class="display-book" style="background: url('.$filepath.'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>';
 
 
 				}
@@ -563,7 +556,6 @@ function doesUserEmailExist($dbconn, $email) {
 
 
 			}
-
 
 
 			function bookDetails($dbconn){
@@ -590,7 +582,9 @@ function doesUserEmailExist($dbconn, $email) {
 
 			}
 
-			function loopingBook($dbconn, $getbookbyid){
+			/*function loopingBook($dbconn, $getbookbyid){
+
+				$result = "";
 
 				$stmt = $dbconn->prepare("SELECT * FROM book WHERE book_id=:bid");
 				$stmt = bindParam(":bid", $getbookbyid);
@@ -600,31 +594,52 @@ function doesUserEmailExist($dbconn, $email) {
 
 				}
 
-				return $row;
+				return $result;
 
+			}*/
+
+			
+		function PostReview($dbconn, $input, $bid, $user_id){
+			$stmt = $dbconn->prepare("INSERT INTO review(review_id,book_id,reviews,date,user_id) 
+				    VALUES(:rid,:bid,:r,NOW(),:uid)");
+			$data = [
+
+			":rid" => NULL,
+			":bid" => $bid,
+			":r" => $input['comment'],			
+			":uid" =>$user_id];
+
+			$stmt->execute($data);
+
+	}
+
+		function ShowReview($dbconn,$username,$book_id){
+			$result = "";
+			$stmt = $dbconn->prepare("SELECT user_id,reviews FROM review WHERE book_id=:bid");
+			$stmt->bindParam(":bid",$book_id);
+			$stmt->execute();
+
+			while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+
+			$result .=  '<h4 class="username">'.$username.'</h4>
+            			<p class="comment">'.$row['reviews'].'</p>';
+			}
+			return $result;
+	}
+
+		function getUsernameById($dbconn, $user_id){
+			$result ="";
+			$stmt = $dbconn->prepare("SELECT username FROM users WHERE user_id=:uid");
+			$stmt->bindParam(":uid",$user_id);
+			$stmt->execute();
+			while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+
+				return $result;
 			}
 
-			function review($dbconn, $input,$user_id,$book_id){
+		}
 
 
-				$stmt = $dbconn->prepare("INSERT INTO review(review_id, book_id,reviews,date,user_id) VALUES(NULL,:bid,:re,NOW(),:user)");
-				$data = [
-
-				
-				":bid" => $book_id,
-				":re" => $input['review'],
-				":user" => $user_id,	
-						];
-
-				#$stmt->bindParam($data);
-
-				$stmt->execute($data);
-
-				while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-
-				}
-				return $row;
-			}
 
 
 			

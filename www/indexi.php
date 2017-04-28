@@ -28,9 +28,7 @@ include 'includes/new_header.php';
 
 
            ?>
-        <!-- <h2 class="book-title">Eloquent Javascript</h2> -->
-        <!-- <h3 class="book-author">by Marijn Haverbeke</h3> -->
-        <!-- <h3 class="book-price">$200</h3> -->
+   
 
         <form>
           <label for="book-amout">Amount</label>
@@ -51,23 +49,8 @@ include 'includes/new_header.php';
 
 
       ?>
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$125</p></div> -->
-        <!-- </li> -->
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$90</p></div> -->
-        <!-- </li> -->
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$250</p></div> -->
-        <!-- </li> -->
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$50</p></div> -->
-        <!-- </li> -->
-      </ul>
+       
+    </ul>
     </div>
     <div class="recently-viewed-books horizontal-book-list">
       <h3 class="header">Most Viewed</h3>
@@ -81,23 +64,7 @@ include 'includes/new_header.php';
 
 
              ?>
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$250</p></div> -->
-        <!-- </li> -->
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$50</p></div> -->
-        <!-- </li> -->
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$125</p></div> -->
-        <!-- </li> -->
-        <!-- <li class="book"> -->
-          <!-- <a href="#"><div class="book-cover"></div></a> -->
-          <!-- <div class="book-price"><p>$90</p></div> -->
-        <!-- </li> -->
-      </ul>
+    </ul>
     </div>
     
   </div>
